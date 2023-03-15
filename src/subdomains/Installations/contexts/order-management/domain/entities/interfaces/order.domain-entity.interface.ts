@@ -1,12 +1,12 @@
 import {
   OrderIdValueObject,
   OrderStatusValueObject,
-} from "../../value-objects/order/";
+} from '../../value-objects/order/';
 import {
   BenefitedDomainEntityBase,
   EmployedDomainEntityBase,
   KitDomainEntityBase,
-} from "../order";
+} from '../order';
 
 export interface IOrderDomainEntity {
   orderId?: string | OrderIdValueObject;
@@ -14,7 +14,7 @@ export interface IOrderDomainEntity {
   kit: KitDomainEntityBase;
   employed: EmployedDomainEntityBase;
   benefited: BenefitedDomainEntityBase;
-  createdAt?: number | Date;
-  updatedAt?: number | Date;
-  deletedAt?: number | Date;
+  createdAt?: number;
+  updatedAt?: number;
+  deletedAt?: number;
 }

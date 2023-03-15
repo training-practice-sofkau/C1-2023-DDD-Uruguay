@@ -11,18 +11,18 @@ export class FeeMySqlEntity extends FeeDomainEntityBase {
 	@PrimaryGeneratedColumn('uuid')
 	feeId: string;
 	
-	@Column()
+	@Column({nullable: true})
 	tax: number;
 
-	@Column()
+	@Column({nullable: true})
 	charge: number;
 
-	@Column()
+	@Column({type: 'bigint', nullable: true})
 	createdAt: number;
-
-	@Column()
+  
+	@Column({type: 'bigint', nullable: true})
 	updatedAt: number;
-
-	@Column()
+  
+	@Column({type: 'bigint', nullable: true})
 	deletedAt: number;
 }

@@ -17,7 +17,7 @@ export class InvoiceMySqlEntity extends InvoiceDomainEntityBase {
   @PrimaryGeneratedColumn('uuid')
   invoiceId: string;
   
-  @Column()
+  @Column({nullable: true})
   status: boolean;
 
   @OneToOne( ()=> CompanyMySqlEntity, (entity)=> entity )
@@ -29,12 +29,12 @@ export class InvoiceMySqlEntity extends InvoiceDomainEntityBase {
   @OneToOne( ()=> OrderMySqlEntity, (entity)=> entity )
   order: OrderMySqlEntity;
       
-  @Column()
+  @Column({type: 'bigint', nullable: true})
   createdAt: number;
 
-  @Column()
+  @Column({type: 'bigint', nullable: true})
   updatedAt: number;
-  
-  @Column()
+
+  @Column({type: 'bigint', nullable: true})
   deletedAt: number;
 }

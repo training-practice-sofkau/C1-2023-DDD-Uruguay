@@ -1,19 +1,19 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   EmployedIdValueObject,
   EmployedNameValueObject,
   EmployedPhoneValueObject,
-} from "../../value-objects/order";
-import { IEmployedDomainEntity } from "../interfaces";
+} from '../../value-objects/order';
+import { IEmployedDomainEntity } from '../interfaces';
 
 export class EmployedDomainEntityBase implements IEmployedDomainEntity {
   employedId?: string | EmployedIdValueObject;
   name?: string | EmployedNameValueObject;
   phone?: string | EmployedPhoneValueObject;
-  createdAt?: number | Date;
-  updatedAt?: number | Date;
-  deletedAt?: number | Date;
+  createdAt?: number;
+  updatedAt?: number;
+  deletedAt?: number;
 
   constructor(_data?: IEmployedDomainEntity) {
     if (_data?.employedId) this.employedId = _data.employedId;
@@ -23,6 +23,6 @@ export class EmployedDomainEntityBase implements IEmployedDomainEntity {
 
     if (_data?.phone) this.phone = _data.phone;
 
-    this.createdAt = new Date();
+    this.createdAt = Date.now();
   }
 }

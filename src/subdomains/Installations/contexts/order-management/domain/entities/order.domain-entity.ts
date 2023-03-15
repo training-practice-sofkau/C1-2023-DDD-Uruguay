@@ -1,15 +1,15 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   OrderIdValueObject,
   OrderStatusValueObject,
-} from "../value-objects/order";
-import { IOrderDomainEntity } from "./interfaces";
+} from '../value-objects/order';
+import { IOrderDomainEntity } from './interfaces';
 import {
   BenefitedDomainEntityBase,
   EmployedDomainEntityBase,
   KitDomainEntityBase,
-} from "./order";
+} from './order';
 
 export class OrderDomainEntityBase implements IOrderDomainEntity {
   orderId?: string | OrderIdValueObject;
@@ -17,15 +17,16 @@ export class OrderDomainEntityBase implements IOrderDomainEntity {
   kit: KitDomainEntityBase;
   employed: EmployedDomainEntityBase;
   benefited: BenefitedDomainEntityBase;
-  createdAt?: number | Date;
-  updatedAt?: number | Date;
-  deletedAt?: number | Date;
+  createdAt?: number;
+  updatedAt?: number;
+  deletedAt?: number;
 
   constructor(_data?: IOrderDomainEntity) {
     if (_data?.orderId) this.orderId = _data.orderId;
     else this.orderId = uuidv4();
 
     if (_data?.status) this.status = _data.status;
+    else this.status = true;
 
     if (_data?.kit) this.kit = _data.kit;
 
@@ -33,6 +34,6 @@ export class OrderDomainEntityBase implements IOrderDomainEntity {
 
     if (_data?.benefited) this.benefited = _data.benefited;
 
-    this.createdAt = new Date();
+    this.createdAt = Date.now();
   }
 }

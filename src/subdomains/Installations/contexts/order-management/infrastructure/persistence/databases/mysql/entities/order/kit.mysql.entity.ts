@@ -11,15 +11,15 @@ export class KitMySqlEntity extends KitDomainEntityBase {
   @PrimaryGeneratedColumn('uuid')
   kitId: string;
 
-  @Column()
+  @Column({nullable: true})
   model: string;
   
-  @Column()
+  @Column({type: 'bigint', nullable: true})
   createdAt: number;
-  
-  @Column()
+
+  @Column({type: 'bigint', nullable: true})
   updatedAt: number;
-  
-  @Column()
+
+  @Column({type: 'bigint', nullable: true})
   deletedAt: number;
 }

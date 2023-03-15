@@ -8,7 +8,8 @@ import {
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: 'env/development.env'
+      isGlobal: true,
+      envFilePath: 'environments/.env.' + process.env.NODE_ENV
     }),
     OrderManagementModule
   ],

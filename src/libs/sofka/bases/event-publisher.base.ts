@@ -1,4 +1,4 @@
-import { IEventPublisher } from "../interface/event-publisher.interface";
+import { IEventPublisher } from '../interface/event-publisher.interface';
 
 /**
  * Abstract class representing an event publisher
@@ -8,7 +8,7 @@ import { IEventPublisher } from "../interface/event-publisher.interface";
  * @class EventPublisherBase
  * @template Response Type of response published
  */
-export abstract class EventPublisherBase<Response> {
+export abstract class EventPublisherBase<Response> implements IEventPublisher {
   /**
    * Response to the event publisher's request
    *
@@ -24,9 +24,7 @@ export abstract class EventPublisherBase<Response> {
    * @param {(Response | Response[] | null)} response Response to the event publisher's request
    * @memberof EventPublisherBase
    */
-  constructor(response: Response | Response[] | null, private readonly eventPublisher: IEventPublisher) {
-    this._response = response;
-  }
+  constructor(private readonly eventPublisher: IEventPublisher) {}
 
   /**
    * Gets the response to the event publisher's request
@@ -47,14 +45,6 @@ export abstract class EventPublisherBase<Response> {
     this._response = value;
   }
 
-  /**
-   * Publishes the event to its subscribers
-   *
-   * @abstract
-   * @memberof EventPublisherBase
-   */
-  abstract publish(): void;
-
   send<Result, Input = Response>(pattern: any, data: Input): Promise<Result> {
     return this.eventPublisher.send(pattern, data);
   }
@@ -65,4 +55,12 @@ export abstract class EventPublisherBase<Response> {
   ): Promise<Result> {
     return this.eventPublisher.emit(pattern, data);
   }
+
+  /**
+   * Publishes the event to its subscribers
+   *
+   * @abstract
+   * @memberof EventPublisherBase
+   */
+    abstract publish<Result = any>(): Promise<Result>;
 }

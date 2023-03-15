@@ -1,17 +1,21 @@
+import { GetOrderUserCase } from '../';
 import {
   AggregateUpdateException,
   IUseCase,
   ValueObjectErrorHandler,
   ValueObjectException,
-} from "../../../../../../../libs/sofka";
-import { OrderAggregate } from "../../../domain/aggregates";
-import { FeeDomainEntityBase } from "../../../domain/entities";
-import { RegisteredOrderEventPublisherBase } from "../../../domain/events";
-import { IUpdateEmployedNameCommand } from "../../../domain/interfaces/commands/order";
-import { IUpdateEmployedNameResponse } from "../../../domain/interfaces/responses/order";
-import { IOrderDomainService } from "../../../domain/services";
-import { EmployedNameValueObject } from "../../../domain/value-objects";
-import { GetOrderUserCase } from "./";
+} from '../../../../../../../libs/sofka';
+import { OrderAggregate } from '../../../domain/aggregates';
+import { FeeDomainEntityBase } from '../../../domain/entities';
+import { CreatedOrderEventPublisherBase } from '../../../domain/events';
+import {
+  IUpdateEmployedNameCommand,
+} from '../../../domain/interfaces/commands/order';
+import {
+  IUpdateEmployedNameResponse,
+} from '../../../domain/interfaces/responses/order';
+import { IOrderDomainService } from '../../../domain/services';
+import { EmployedNameValueObject } from '../../../domain/value-objects';
 
 export class UpdateEmployedNameUseCase<
     Command extends IUpdateEmployedNameCommand = IUpdateEmployedNameCommand,
@@ -25,12 +29,12 @@ export class UpdateEmployedNameUseCase<
   constructor(
     private readonly orderService: IOrderDomainService,
     private readonly orderGet: GetOrderUserCase,
-    private readonly registeredOrderEventPublisherBase: RegisteredOrderEventPublisherBase
+    private readonly createdOrderEventPublisherBase: CreatedOrderEventPublisherBase
   ) {
     super();
     this.orderAggregateRoot = new OrderAggregate({
       orderService,
-      registeredOrderEventPublisherBase,
+      createdOrderEventPublisherBase,
     });
   }
 
@@ -43,18 +47,21 @@ export class UpdateEmployedNameUseCase<
   private async executeCommand(
     command: Command
   ): Promise<FeeDomainEntityBase | null> {
-    this.validateObjectValue(command.name);
-    const order = await this.orderGet.execute({ orderId: command.orderId });
-    if (order.success) {
-      order.data.employed.name = command.name;
-      return order.data.employed;
+    let name: EmployedNameValueObject;
+    if (typeof command.name != "string"){
+      name = this.validateObjectValue(command.name);
+    } else name = new EmployedNameValueObject(command.name.toString());
+    const order = await this.orderAggregateRoot.getEmployed(command.employedId);
+    if (order) {
+      order.name = name;
+      return order;
     } else
       throw new AggregateUpdateException(
         "Hay algunos errores en el comando ejecutado por UpdateEmployedNameUserCase"
       );
   }
 
-  private validateObjectValue(valueObject: EmployedNameValueObject): void {
+  private validateObjectValue(valueObject: EmployedNameValueObject): EmployedNameValueObject {
     if (
       valueObject instanceof EmployedNameValueObject &&
       valueObject.hasErrors()
@@ -66,5 +73,7 @@ export class UpdateEmployedNameUseCase<
         "Hay algunos errores en el comando ejecutado por UpdateEmployedNameUserCase",
         this.getErrors()
       );
+
+    return valueObject;
   }
 }

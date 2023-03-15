@@ -1,4 +1,4 @@
-import { InvoiceDomainEntityBase } from "../../entities";
+import { InvoiceDomainEntityBase } from '../../entities';
 
 export interface ICreateInvoiceResponse {
   success: boolean;

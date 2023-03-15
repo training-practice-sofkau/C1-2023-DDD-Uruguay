@@ -1,17 +1,21 @@
+import { GetOrderUserCase } from '../';
 import {
   AggregateUpdateException,
   IUseCase,
   ValueObjectErrorHandler,
   ValueObjectException,
-} from "../../../../../../../libs/sofka";
-import { OrderAggregate } from "../../../domain/aggregates";
-import { FeeDomainEntityBase } from "../../../domain/entities";
-import { RegisteredOrderEventPublisherBase } from "../../../domain/events";
-import { IUpdateEmployedPhoneCommand } from "../../../domain/interfaces/commands/order";
-import { IUpdateEmployedPhoneResponse } from "../../../domain/interfaces/responses/order";
-import { IOrderDomainService } from "../../../domain/services";
-import { EmployedPhoneValueObject } from "../../../domain/value-objects";
-import { GetOrderUserCase } from "./";
+} from '../../../../../../../libs/sofka';
+import { OrderAggregate } from '../../../domain/aggregates';
+import { FeeDomainEntityBase } from '../../../domain/entities';
+import { CreatedOrderEventPublisherBase } from '../../../domain/events';
+import {
+  IUpdateEmployedPhoneCommand,
+} from '../../../domain/interfaces/commands/order';
+import {
+  IUpdateEmployedPhoneResponse,
+} from '../../../domain/interfaces/responses/order';
+import { IOrderDomainService } from '../../../domain/services';
+import { EmployedPhoneValueObject } from '../../../domain/value-objects';
 
 export class UpdateEmployedPhoneUseCase<
     Command extends IUpdateEmployedPhoneCommand = IUpdateEmployedPhoneCommand,
@@ -25,12 +29,12 @@ export class UpdateEmployedPhoneUseCase<
   constructor(
     private readonly orderService: IOrderDomainService,
     private readonly orderGet: GetOrderUserCase,
-    private readonly registeredOrderEventPublisherBase: RegisteredOrderEventPublisherBase
+    private readonly createdOrderEventPublisherBase: CreatedOrderEventPublisherBase
   ) {
     super();
     this.orderAggregateRoot = new OrderAggregate({
       orderService,
-      registeredOrderEventPublisherBase,
+      createdOrderEventPublisherBase,
     });
   }
 
@@ -43,18 +47,21 @@ export class UpdateEmployedPhoneUseCase<
   private async executeCommand(
     command: Command
   ): Promise<FeeDomainEntityBase | null> {
-    this.validateObjectValue(command.phone);
-    const order = await this.orderGet.execute({ orderId: command.orderId });
-    if (order.success) {
-      order.data.employed.phone = command.phone;
-      return order.data.employed;
+    let phone: EmployedPhoneValueObject;
+    if (typeof command.phone != "string"){
+      phone = this.validateObjectValue(command.phone);
+    } else phone = new EmployedPhoneValueObject(command.phone.toString());
+    const order = await this.orderAggregateRoot.getEmployed(command.employedId);
+    if (order) {
+      order.phone = phone;
+      return order;
     } else
       throw new AggregateUpdateException(
         "Hay algunos errores en el comando ejecutado por UpdateEmployedPhoneUserCase"
       );
   }
 
-  private validateObjectValue(valueObject: EmployedPhoneValueObject): void {
+  private validateObjectValue(valueObject: EmployedPhoneValueObject): EmployedPhoneValueObject {
     if (
       valueObject instanceof EmployedPhoneValueObject &&
       valueObject.hasErrors()
@@ -66,5 +73,7 @@ export class UpdateEmployedPhoneUseCase<
         "Hay algunos errores en el comando ejecutado por UpdateEmployedPhoneUserCase",
         this.getErrors()
       );
+
+    return valueObject;
   }
 }

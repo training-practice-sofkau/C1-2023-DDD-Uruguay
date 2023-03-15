@@ -13,24 +13,24 @@ export class BenefitedMySqlEntity extends BenefitedDomainEntityBase {
   @PrimaryGeneratedColumn('uuid')
   benefitedId: string;
 
-  @Column()
+  @Column({nullable: true})
   name: string;
 
-  @Column()
+  @Column({nullable: true})
   phone: string;
 
-  @Column()
+  @Column({nullable: true})
   address: string;
   
   @Column('uuid')
   companyId: string;
 
-  @Column()
+  @Column({type: 'bigint', nullable: true})
   createdAt: number;
 
-  @Column()
+  @Column({type: 'bigint', nullable: true})
   updatedAt: number;
 
-  @Column()
+  @Column({type: 'bigint', nullable: true})
   deletedAt: number;
 }

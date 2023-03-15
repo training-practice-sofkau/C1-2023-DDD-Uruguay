@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   BenefitedAddressValueObject,
@@ -6,8 +6,8 @@ import {
   BenefitedIdValueObject,
   BenefitedNameValueObject,
   BenefitedPhoneValueObject,
-} from "../../value-objects/order";
-import { IBenefitedDomainEntity } from "../interfaces";
+} from '../../value-objects/order';
+import { IBenefitedDomainEntity } from '../interfaces';
 
 export class BenefitedDomainEntityBase implements IBenefitedDomainEntity {
   benefitedId?: string | BenefitedIdValueObject;
@@ -15,9 +15,9 @@ export class BenefitedDomainEntityBase implements IBenefitedDomainEntity {
   phone?: string | BenefitedPhoneValueObject;
   address?: string | BenefitedAddressValueObject;
   companyId?: string | BenefitedCompanyIdValueObject;
-  createdAt?: number | Date;
-  updatedAt?: number | Date;
-  deletedAt?: number | Date;
+  createdAt?: number;
+  updatedAt?: number;
+  deletedAt?: number;
 
   constructor(_data?: IBenefitedDomainEntity) {
     if (_data?.benefitedId) this.benefitedId = _data.benefitedId;
@@ -31,6 +31,6 @@ export class BenefitedDomainEntityBase implements IBenefitedDomainEntity {
 
     if (_data?.companyId) this.companyId = _data.companyId;
 
-    this.createdAt = new Date();
+    this.createdAt = Date.now();
   }
 }

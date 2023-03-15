@@ -1,17 +1,21 @@
+import { GetInvoiceUserCase } from '../';
 import {
   AggregateUpdateException,
   IUseCase,
   ValueObjectErrorHandler,
   ValueObjectException,
-} from "../../../../../../../libs/sofka";
-import { InvoiceAggregate } from "../../../domain/aggregates";
-import { CompanyDomainEntityBase } from "../../../domain/entities";
-import { RegisteredInvoiceEventPublisherBase } from "../../../domain/events";
-import { IUpdateCompanyNameCommand } from "../../../domain/interfaces/commands/invoice";
-import { IUpdateCompanyNameResponse } from "../../../domain/interfaces/responses/invoice";
-import { IInvoiceDomainService } from "../../../domain/services";
-import { CompanyNameValueObject } from "../../../domain/value-objects";
-import { GetInvoiceUserCase } from "./";
+} from '../../../../../../../libs/sofka';
+import { InvoiceAggregate } from '../../../domain/aggregates';
+import { CompanyDomainEntityBase } from '../../../domain/entities';
+import { CreatedInvoiceEventPublisherBase } from '../../../domain/events';
+import {
+  IUpdateCompanyNameCommand,
+} from '../../../domain/interfaces/commands/invoice';
+import {
+  IUpdateCompanyNameResponse,
+} from '../../../domain/interfaces/responses/invoice';
+import { IInvoiceDomainService } from '../../../domain/services';
+import { CompanyNameValueObject } from '../../../domain/value-objects';
 
 export class UpdateCompanyNameUseCase<
     Command extends IUpdateCompanyNameCommand = IUpdateCompanyNameCommand,
@@ -25,12 +29,12 @@ export class UpdateCompanyNameUseCase<
   constructor(
     private readonly invoiceService: IInvoiceDomainService,
     private readonly invoiceGet: GetInvoiceUserCase,
-    private readonly registeredInvoiceEventPublisherBase: RegisteredInvoiceEventPublisherBase
+    private readonly createdInvoiceEventPublisherBase: CreatedInvoiceEventPublisherBase
   ) {
     super();
     this.invoiceAggregateRoot = new InvoiceAggregate({
       invoiceService,
-      registeredInvoiceEventPublisherBase,
+      createdInvoiceEventPublisherBase,
     });
   }
 
@@ -43,20 +47,21 @@ export class UpdateCompanyNameUseCase<
   private async executeCommand(
     command: Command
   ): Promise<CompanyDomainEntityBase | null> {
-    this.validateObjectValue(command.name);
-    const invoice = await this.invoiceGet.execute({
-      invoiceId: command.invoiceId,
-    });
-    if (invoice.success) {
-      invoice.data.company.name = command.name;
-      return invoice.data.company;
+    let name: CompanyNameValueObject;
+    if (typeof command.name != "string"){
+      name = this.validateObjectValue(command.name);
+    } else name = new CompanyNameValueObject(command.name.toString());
+    const invoice = await this.invoiceAggregateRoot.getCompany(command.companyId);
+    if (invoice) {
+      invoice.name = name;
+      return invoice;
     } else
       throw new AggregateUpdateException(
         "Hay algunos errores en el comando ejecutado por UpdateCompanyNameUserCase"
       );
   }
 
-  private validateObjectValue(valueObject: CompanyNameValueObject): void {
+  private validateObjectValue(valueObject: CompanyNameValueObject): CompanyNameValueObject {
     if (
       valueObject instanceof CompanyNameValueObject &&
       valueObject.hasErrors()
@@ -68,5 +73,7 @@ export class UpdateCompanyNameUseCase<
         "Hay algunos errores en el comando ejecutado por UpdateCompanyNameUserCase",
         this.getErrors()
       );
+    
+    return valueObject;
   }
 }

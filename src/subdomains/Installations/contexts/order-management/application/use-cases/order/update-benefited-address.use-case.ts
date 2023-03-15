@@ -1,17 +1,21 @@
+import { GetOrderUserCase } from '../';
 import {
   AggregateUpdateException,
   IUseCase,
   ValueObjectErrorHandler,
   ValueObjectException,
-} from "../../../../../../../libs/sofka";
-import { OrderAggregate } from "../../../domain/aggregates";
-import { FeeDomainEntityBase } from "../../../domain/entities";
-import { RegisteredOrderEventPublisherBase } from "../../../domain/events";
-import { IUpdateBenefitedAddressCommand } from "../../../domain/interfaces/commands/order";
-import { IUpdateBenefitedAddressResponse } from "../../../domain/interfaces/responses/order";
-import { IOrderDomainService } from "../../../domain/services";
-import { BenefitedAddressValueObject } from "../../../domain/value-objects";
-import { GetOrderUserCase } from "./";
+} from '../../../../../../../libs/sofka';
+import { OrderAggregate } from '../../../domain/aggregates';
+import { FeeDomainEntityBase } from '../../../domain/entities';
+import { CreatedOrderEventPublisherBase } from '../../../domain/events';
+import {
+  IUpdateBenefitedAddressCommand,
+} from '../../../domain/interfaces/commands/order';
+import {
+  IUpdateBenefitedAddressResponse,
+} from '../../../domain/interfaces/responses/order';
+import { IOrderDomainService } from '../../../domain/services';
+import { BenefitedAddressValueObject } from '../../../domain/value-objects';
 
 export class UpdateBenefitedAddressUseCase<
     Command extends IUpdateBenefitedAddressCommand = IUpdateBenefitedAddressCommand,
@@ -25,12 +29,12 @@ export class UpdateBenefitedAddressUseCase<
   constructor(
     private readonly orderService: IOrderDomainService,
     private readonly orderGet: GetOrderUserCase,
-    private readonly registeredOrderEventPublisherBase: RegisteredOrderEventPublisherBase
+    private readonly createdOrderEventPublisherBase: CreatedOrderEventPublisherBase
   ) {
     super();
     this.orderAggregateRoot = new OrderAggregate({
       orderService,
-      registeredOrderEventPublisherBase,
+      createdOrderEventPublisherBase,
     });
   }
 
@@ -43,18 +47,21 @@ export class UpdateBenefitedAddressUseCase<
   private async executeCommand(
     command: Command
   ): Promise<FeeDomainEntityBase | null> {
-    this.validateObjectValue(command.address);
-    const order = await this.orderGet.execute({ orderId: command.orderId });
-    if (order.success) {
-      order.data.benefited.address = command.address;
-      return order.data.benefited;
+    let address: BenefitedAddressValueObject;
+    if (typeof command.address != "string"){
+      address = this.validateObjectValue(command.address);
+    } else address = new BenefitedAddressValueObject(command.address.toString());
+    const order = await this.orderAggregateRoot.getBenefited(command.benefitedId);
+    if (order) {
+      order.address = address;
+      return order;
     } else
       throw new AggregateUpdateException(
         "Hay algunos errores en el comando ejecutado por UpdateBenefitedAddressUserCase"
       );
   }
 
-  private validateObjectValue(valueObject: BenefitedAddressValueObject): void {
+  private validateObjectValue(valueObject: BenefitedAddressValueObject): BenefitedAddressValueObject {
     if (
       valueObject instanceof BenefitedAddressValueObject &&
       valueObject.hasErrors()
@@ -66,5 +73,7 @@ export class UpdateBenefitedAddressUseCase<
         "Hay algunos errores en el comando ejecutado por UpdateBenefitedAddressUserCase",
         this.getErrors()
       );
+    
+    return valueObject;
   }
 }

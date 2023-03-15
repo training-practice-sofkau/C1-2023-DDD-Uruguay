@@ -1,6 +1,6 @@
-import { EmployedNameValueObject } from "../../../value-objects/order";
+import { EmployedNameValueObject } from '../../../value-objects/order';
 
 export interface IUpdateEmployedNameCommand {
-  orderId: string;
-  name: EmployedNameValueObject;
+  employedId: string;
+  name: string | EmployedNameValueObject;
 }

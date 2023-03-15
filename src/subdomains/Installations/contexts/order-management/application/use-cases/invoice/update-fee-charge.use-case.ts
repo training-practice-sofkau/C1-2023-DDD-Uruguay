@@ -1,17 +1,21 @@
+import { GetInvoiceUserCase } from '../';
 import {
   AggregateUpdateException,
   IUseCase,
   ValueObjectErrorHandler,
   ValueObjectException,
-} from "../../../../../../../libs/sofka";
-import { InvoiceAggregate } from "../../../domain/aggregates";
-import { FeeDomainEntityBase } from "../../../domain/entities";
-import { RegisteredInvoiceEventPublisherBase } from "../../../domain/events";
-import { IUpdateFeeChargeCommand } from "../../../domain/interfaces/commands/invoice";
-import { IUpdateFeeChargeResponse } from "../../../domain/interfaces/responses/invoice";
-import { IInvoiceDomainService } from "../../../domain/services";
-import { FeeChargeValueObject } from "../../../domain/value-objects";
-import { GetInvoiceUserCase } from "./";
+} from '../../../../../../../libs/sofka';
+import { InvoiceAggregate } from '../../../domain/aggregates';
+import { FeeDomainEntityBase } from '../../../domain/entities';
+import { CreatedInvoiceEventPublisherBase } from '../../../domain/events';
+import {
+  IUpdateFeeChargeCommand,
+} from '../../../domain/interfaces/commands/invoice';
+import {
+  IUpdateFeeChargeResponse,
+} from '../../../domain/interfaces/responses/invoice';
+import { IInvoiceDomainService } from '../../../domain/services';
+import { FeeChargeValueObject } from '../../../domain/value-objects';
 
 export class UpdateFeeChargeUseCase<
     Command extends IUpdateFeeChargeCommand = IUpdateFeeChargeCommand,
@@ -25,12 +29,12 @@ export class UpdateFeeChargeUseCase<
   constructor(
     private readonly invoiceService: IInvoiceDomainService,
     private readonly invoiceGet: GetInvoiceUserCase,
-    private readonly registeredInvoiceEventPublisherBase: RegisteredInvoiceEventPublisherBase
+    private readonly createdInvoiceEventPublisherBase: CreatedInvoiceEventPublisherBase
   ) {
     super();
     this.invoiceAggregateRoot = new InvoiceAggregate({
       invoiceService,
-      registeredInvoiceEventPublisherBase,
+      createdInvoiceEventPublisherBase,
     });
   }
 
@@ -43,20 +47,21 @@ export class UpdateFeeChargeUseCase<
   private async executeCommand(
     command: Command
   ): Promise<FeeDomainEntityBase | null> {
-    this.validateObjectValue(command.charge);
-    const invoice = await this.invoiceGet.execute({
-      invoiceId: command.invoiceId,
-    });
-    if (invoice.success) {
-      invoice.data.fee.charge = command.charge;
-      return invoice.data.fee;
+    let charge: FeeChargeValueObject;
+    if (typeof command.charge != "string"){
+      charge = this.validateObjectValue(command.charge);
+    } else charge = new FeeChargeValueObject(+command.charge);
+    const invoice = await this.invoiceAggregateRoot.getFee(command.feeId);
+    if (invoice) {
+      invoice.charge = charge;
+      return invoice;
     } else
       throw new AggregateUpdateException(
         "Hay algunos errores en el comando ejecutado por UpdateFeeChargeUserCase"
       );
   }
 
-  private validateObjectValue(valueObject: FeeChargeValueObject): void {
+  private validateObjectValue(valueObject: FeeChargeValueObject): FeeChargeValueObject {
     if (valueObject instanceof FeeChargeValueObject && valueObject.hasErrors())
       this.setErrors(valueObject.getErrors());
 
@@ -65,5 +70,7 @@ export class UpdateFeeChargeUseCase<
         "Hay algunos errores en el comando ejecutado por UpdateFeeChargeUserCase",
         this.getErrors()
       );
+    
+    return valueObject;
   }
 }

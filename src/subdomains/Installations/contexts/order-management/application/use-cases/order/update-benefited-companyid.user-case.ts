@@ -1,17 +1,21 @@
+import { GetOrderUserCase } from '../';
 import {
   AggregateUpdateException,
   IUseCase,
   ValueObjectErrorHandler,
   ValueObjectException,
-} from "../../../../../../../libs/sofka";
-import { OrderAggregate } from "../../../domain/aggregates";
-import { FeeDomainEntityBase } from "../../../domain/entities";
-import { RegisteredOrderEventPublisherBase } from "../../../domain/events";
-import { IUpdateBenefitedCompanyIdCommand } from "../../../domain/interfaces/commands/order";
-import { IUpdateBenefitedCompanyIdResponse } from "../../../domain/interfaces/responses/order";
-import { IOrderDomainService } from "../../../domain/services";
-import { BenefitedCompanyIdValueObject } from "../../../domain/value-objects";
-import { GetOrderUserCase } from "./";
+} from '../../../../../../../libs/sofka';
+import { OrderAggregate } from '../../../domain/aggregates';
+import { FeeDomainEntityBase } from '../../../domain/entities';
+import { CreatedOrderEventPublisherBase } from '../../../domain/events';
+import {
+  IUpdateBenefitedCompanyIdCommand,
+} from '../../../domain/interfaces/commands/order';
+import {
+  IUpdateBenefitedCompanyIdResponse,
+} from '../../../domain/interfaces/responses/order';
+import { IOrderDomainService } from '../../../domain/services';
+import { BenefitedCompanyIdValueObject } from '../../../domain/value-objects';
 
 export class UpdateBenefitedCompanyIdUseCase<
     Command extends IUpdateBenefitedCompanyIdCommand = IUpdateBenefitedCompanyIdCommand,
@@ -25,12 +29,12 @@ export class UpdateBenefitedCompanyIdUseCase<
   constructor(
     private readonly orderService: IOrderDomainService,
     private readonly orderGet: GetOrderUserCase,
-    private readonly registeredOrderEventPublisherBase: RegisteredOrderEventPublisherBase
+    private readonly createdOrderEventPublisherBase: CreatedOrderEventPublisherBase
   ) {
     super();
     this.orderAggregateRoot = new OrderAggregate({
       orderService,
-      registeredOrderEventPublisherBase,
+      createdOrderEventPublisherBase,
     });
   }
 
@@ -43,11 +47,14 @@ export class UpdateBenefitedCompanyIdUseCase<
   private async executeCommand(
     command: Command
   ): Promise<FeeDomainEntityBase | null> {
-    this.validateObjectValue(command.companyId);
-    const order = await this.orderGet.execute({ orderId: command.orderId });
-    if (order.success) {
-      order.data.benefited.companyId = command.companyId;
-      return order.data.benefited;
+    let companyId: BenefitedCompanyIdValueObject;
+    if (typeof command.companyId != "string"){
+      companyId = this.validateObjectValue(command.companyId);
+    } else companyId = new BenefitedCompanyIdValueObject(command.companyId.toString());
+    const order = await this.orderAggregateRoot.getBenefited(command.benefitedId);
+    if (order) {
+      order.companyId = companyId;
+      return order;
     } else
       throw new AggregateUpdateException(
         "Hay algunos errores en el comando ejecutado por UpdateBenefitedCompanyIdUserCase"
@@ -56,7 +63,7 @@ export class UpdateBenefitedCompanyIdUseCase<
 
   private validateObjectValue(
     valueObject: BenefitedCompanyIdValueObject
-  ): void {
+  ): BenefitedCompanyIdValueObject {
     if (
       valueObject instanceof BenefitedCompanyIdValueObject &&
       valueObject.hasErrors()
@@ -68,5 +75,7 @@ export class UpdateBenefitedCompanyIdUseCase<
         "Hay algunos errores en el comando ejecutado por UpdateBenefitedCompanyIdUserCase",
         this.getErrors()
       );
+    
+    return valueObject;
   }
 }

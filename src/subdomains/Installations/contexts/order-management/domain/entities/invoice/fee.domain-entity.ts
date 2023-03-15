@@ -1,19 +1,19 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   FeeChargeValueObject,
   FeeIdValueObject,
   FeeTaxValueObject,
-} from "../../value-objects/invoice";
-import { IFeeDomainEntity } from "../interfaces";
+} from '../../value-objects/invoice';
+import { IFeeDomainEntity } from '../interfaces';
 
 export class FeeDomainEntityBase implements IFeeDomainEntity {
   feeId?: string | FeeIdValueObject;
   tax?: number | FeeTaxValueObject;
   charge?: number | FeeChargeValueObject;
-  createdAt?: number | Date;
-  updatedAt?: number | Date;
-  deletedAt?: number | Date;
+  createdAt?: number;
+  updatedAt?: number;
+  deletedAt?: number;
 
   constructor(_data?: IFeeDomainEntity) {
     if (_data?.feeId) this.feeId = _data.feeId;
@@ -23,6 +23,6 @@ export class FeeDomainEntityBase implements IFeeDomainEntity {
 
     if (_data?.charge) this.charge = _data.charge;
 
-    this.createdAt = new Date();
+    this.createdAt = Date.now();
   }
 }

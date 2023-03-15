@@ -13,18 +13,18 @@ export class EmployedMySqlEntity extends EmployedDomainEntityBase {
 	@PrimaryGeneratedColumn('uuid')
 	employedId: string;
 
-	@Column()
+	@Column({nullable: true})
 	name: string;
 
-	@Column()
+	@Column({nullable: true})
 	phone: string;
 
-	@Column()
+	@Column({type: 'bigint', nullable: true})
 	createdAt: number;
-
-	@Column()
+  
+	@Column({type: 'bigint', nullable: true})
 	updatedAt: number;
-
-	@Column()
+  
+	@Column({type: 'bigint', nullable: true})
 	deletedAt: number;
 }

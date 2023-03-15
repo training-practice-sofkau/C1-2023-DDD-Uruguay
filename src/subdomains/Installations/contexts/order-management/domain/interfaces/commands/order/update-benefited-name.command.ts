@@ -1,6 +1,6 @@
-import { BenefitedNameValueObject } from "../../../value-objects/order";
+import { BenefitedNameValueObject } from '../../../value-objects/order';
 
 export interface IUpdateBenefitedNameCommand {
-  orderId: string;
-  name: BenefitedNameValueObject;
+  benefitedId: string;
+  name: string | BenefitedNameValueObject;
 }

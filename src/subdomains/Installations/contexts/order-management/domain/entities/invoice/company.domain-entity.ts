@@ -1,19 +1,19 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   CompanyBankAccountValueObject,
   CompanyIdValueObject,
   CompanyNameValueObject,
-} from "../../value-objects/invoice";
-import { ICompanyDomainEntity } from "../interfaces";
+} from '../../value-objects/invoice';
+import { ICompanyDomainEntity } from '../interfaces';
 
 export class CompanyDomainEntityBase implements ICompanyDomainEntity {
   companyId?: string | CompanyIdValueObject;
   name?: string | CompanyNameValueObject;
   bankAccount?: string | CompanyBankAccountValueObject;
-  createdAt?: number | Date;
-  updatedAt?: number | Date;
-  deletedAt?: number | Date;
+  createdAt?: number;
+  updatedAt?: number;
+  deletedAt?: number;
 
   constructor(_data?: ICompanyDomainEntity) {
     if (_data?.companyId) this.companyId = _data.companyId;
@@ -23,6 +23,6 @@ export class CompanyDomainEntityBase implements ICompanyDomainEntity {
 
     if (_data?.companyId) this.companyId = _data.companyId;
 
-    this.createdAt = new Date();
+    this.createdAt = Date.now();
   }
 }

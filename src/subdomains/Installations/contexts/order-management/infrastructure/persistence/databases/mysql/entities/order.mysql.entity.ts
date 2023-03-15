@@ -17,7 +17,7 @@ export class OrderMySqlEntity extends OrderDomainEntityBase {
   @PrimaryGeneratedColumn('uuid')
   orderId: string;
 
-  @Column()
+  @Column({nullable: true})
   status: boolean;
 
   @OneToOne( ()=> KitMySqlEntity, (entity)=> entity )
@@ -29,12 +29,12 @@ export class OrderMySqlEntity extends OrderDomainEntityBase {
   @OneToOne( ()=> BenefitedMySqlEntity, (entity)=> entity )
   benefited: BenefitedMySqlEntity;
       
-  @Column()
+  @Column({type: 'bigint', nullable: true})
   createdAt: number;
 
-  @Column()
+  @Column({type: 'bigint', nullable: true})
   updatedAt: number;
 
-  @Column()
+  @Column({type: 'bigint', nullable: true})
   deletedAt: number;
 }

@@ -1,6 +1,6 @@
-import { CompanyNameValueObject } from "../../../value-objects/invoice";
+import { CompanyNameValueObject } from '../../../value-objects/invoice';
 
 export interface IUpdateCompanyNameCommand {
-  invoiceId: string;
-  name: CompanyNameValueObject;
+  companyId: string;
+  name: string | CompanyNameValueObject;
 }

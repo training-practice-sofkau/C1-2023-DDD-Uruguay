@@ -1,6 +1,6 @@
-import { FeeChargeValueObject } from "../../../value-objects/invoice";
+import { FeeChargeValueObject } from '../../../value-objects/invoice';
 
 export interface IUpdateFeeChargeCommand {
-  invoiceId: string;
-  charge: FeeChargeValueObject;
+  feeId: string;
+  charge: string | FeeChargeValueObject;
 }

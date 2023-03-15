@@ -1,17 +1,17 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   KitIdValueObject,
   KitModelValueObject,
-} from "../../value-objects/order";
-import { IKitDomainEntity } from "../interfaces";
+} from '../../value-objects/order';
+import { IKitDomainEntity } from '../interfaces';
 
 export class KitDomainEntityBase implements IKitDomainEntity {
   kitId?: string | KitIdValueObject;
   model?: string | KitModelValueObject;
-  createdAt?: number | Date;
-  updatedAt?: number | Date;
-  deletedAt?: number | Date;
+  createdAt?: number;
+  updatedAt?: number;
+  deletedAt?: number;
 
   constructor(_data?: IKitDomainEntity) {
     if (_data?.kitId) this.kitId = _data.kitId;
@@ -19,6 +19,6 @@ export class KitDomainEntityBase implements IKitDomainEntity {
 
     if (_data?.model) this.model = _data.model;
 
-    this.createdAt = new Date();
+    this.createdAt = Date.now();
   }
 }

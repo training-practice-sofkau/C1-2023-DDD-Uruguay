@@ -5,65 +5,48 @@ import {
   FeeDomainEntityBase,
 } from '../entities/invoice';
 import {
-  GetInvoiceEventPublisherBase,
-  RegisteredInvoiceEventPublisherBase,
+  CreatedInvoiceEventPublisherBase,
+  GettedInvoiceEventPublisherBase,
 } from '../events/publishers';
 import {
-  InvoiceCompanyAddedEventPublisherBase,
-  InvoiceCompanyUpdatedEventPublisherBase,
-  InvoiceFeeAddedEventPublisherBase,
-  InvoiceFeeUpdatedEventPublisherBase,
   InvoiceStatusChangedEventPublisherBase,
 } from '../events/publishers/invoice';
-import { IInvoiceDomainService } from '../services';
 import {
-  CompanyBankAccountValueObject,
-  CompanyNameValueObject,
-  FeeChargeValueObject,
-  FeeTaxValueObject,
-} from '../value-objects';
+  ICompanyDomainService,
+  IFeeDomainService,
+  IInvoiceDomainService,
+} from '../services';
 import { CreateInvoice } from './helpers';
 
-export class InvoiceAggregate implements IInvoiceDomainService {
+export class InvoiceAggregate implements IInvoiceDomainService, ICompanyDomainService, IFeeDomainService {
   private readonly invoiceService?: IInvoiceDomainService;
-  private readonly registeredInvoiceEventPublisherBase?: RegisteredInvoiceEventPublisherBase;
-  private readonly getInvoiceEventPublisherBase?: GetInvoiceEventPublisherBase;
-  private readonly invoiceCompanyAddedEventPublisherBase?: InvoiceCompanyAddedEventPublisherBase;
-  private readonly invoiceCompanyUpdatedEventPublisherBase?: InvoiceCompanyUpdatedEventPublisherBase;
-  private readonly invoiceFeeAddedEventPublisherBase?: InvoiceFeeAddedEventPublisherBase;
-  private readonly invoiceFeeUpdatedEventPublisherBase?: InvoiceFeeUpdatedEventPublisherBase;
+  private readonly companyService?: ICompanyDomainService;
+  private readonly feeService?: IFeeDomainService;
+  private readonly createdInvoiceEventPublisherBase?: CreatedInvoiceEventPublisherBase;
+  private readonly gettedInvoiceEventPublisherBase?: GettedInvoiceEventPublisherBase;
   private readonly invoiceStatusChangedEventPublisherBase?: InvoiceStatusChangedEventPublisherBase;
 
   constructor({
     invoiceService,
-    getInvoiceEventPublisherBase,
-    registeredInvoiceEventPublisherBase,
-    invoiceCompanyAddedEventPublisherBase,
-    invoiceCompanyUpdatedEventPublisherBase,
-    invoiceFeeAddedEventPublisherBase,
-    invoiceFeeUpdatedEventPublisherBase,
+    companyService,
+    feeService,
+    gettedInvoiceEventPublisherBase,
+    createdInvoiceEventPublisherBase,
     invoiceStatusChangedEventPublisherBase,
   }: {
     invoiceService?: IInvoiceDomainService;
-    getInvoiceEventPublisherBase?: GetInvoiceEventPublisherBase;
-    registeredInvoiceEventPublisherBase?: RegisteredInvoiceEventPublisherBase;
-    invoiceCompanyAddedEventPublisherBase?: InvoiceCompanyAddedEventPublisherBase;
-    invoiceCompanyUpdatedEventPublisherBase?: InvoiceCompanyUpdatedEventPublisherBase;
-    invoiceFeeAddedEventPublisherBase?: InvoiceFeeAddedEventPublisherBase;
-    invoiceFeeUpdatedEventPublisherBase?: InvoiceFeeUpdatedEventPublisherBase;
+    companyService?: ICompanyDomainService;
+    feeService?: IFeeDomainService;
+    gettedInvoiceEventPublisherBase?: GettedInvoiceEventPublisherBase;
+    createdInvoiceEventPublisherBase?: CreatedInvoiceEventPublisherBase;
     invoiceStatusChangedEventPublisherBase?: InvoiceStatusChangedEventPublisherBase;
   }) {
     this.invoiceService = invoiceService;
-    this.registeredInvoiceEventPublisherBase =
-      registeredInvoiceEventPublisherBase;
-    this.getInvoiceEventPublisherBase = getInvoiceEventPublisherBase;
-    this.invoiceCompanyAddedEventPublisherBase =
-      invoiceCompanyAddedEventPublisherBase;
-    this.invoiceCompanyUpdatedEventPublisherBase =
-      invoiceCompanyUpdatedEventPublisherBase;
-    this.invoiceFeeAddedEventPublisherBase = invoiceFeeAddedEventPublisherBase;
-    this.invoiceFeeUpdatedEventPublisherBase =
-      invoiceFeeUpdatedEventPublisherBase;
+    this.companyService = companyService;
+    this.feeService = feeService;
+    this.gettedInvoiceEventPublisherBase = gettedInvoiceEventPublisherBase;
+    this.createdInvoiceEventPublisherBase =
+      createdInvoiceEventPublisherBase;
     this.invoiceStatusChangedEventPublisherBase =
       invoiceStatusChangedEventPublisherBase;
   }
@@ -73,102 +56,138 @@ export class InvoiceAggregate implements IInvoiceDomainService {
   ): Promise<InvoiceDomainEntityBase> {
     if (!this.invoiceService)
       throw new AggregateRootException("InvoiceService is not defined");
-    if (!this.registeredInvoiceEventPublisherBase)
+    if (!this.createdInvoiceEventPublisherBase)
       throw new AggregateRootException(
-        "RegisteredInvoiceEventPublisherBase is not defined"
+        "CreatedInvoiceEventPublisherBase is not defined"
       );
 
     return CreateInvoice(
       invoice,
       this.invoiceService,
-      this.registeredInvoiceEventPublisherBase
+      this.createdInvoiceEventPublisherBase
     );
   }
 
   async getInvoice(invoiceId: string): Promise<InvoiceDomainEntityBase> {
-    if (!this.getInvoiceEventPublisherBase)
+    if (!this.gettedInvoiceEventPublisherBase)
       throw new AggregateRootException(
-        "GetInvoiceEventPublisherBase is not defined"
+        "GettedInvoiceEventPublisherBase is not defined"
       );
 
-    return this.registeredInvoiceEventPublisherBase.response[0];
+    return this.createdInvoiceEventPublisherBase.response[0];
   }
 
   async deleteInvoice(invoiceId: string): Promise<boolean> {
-    if (!this.getInvoiceEventPublisherBase)
+    if (!this.gettedInvoiceEventPublisherBase)
       throw new AggregateRootException(
-        "GetInvoiceEventPublisherBase is not defined"
+        "GettedInvoiceEventPublisherBase is not defined"
       );
 
-    return this.registeredInvoiceEventPublisherBase.response[0];
+    return this.createdInvoiceEventPublisherBase.response[0];
   }
 
   async createCompany(
     company: CompanyDomainEntityBase
   ): Promise<CompanyDomainEntityBase> {
-    if (!this.invoiceCompanyAddedEventPublisherBase)
+    if (!this.gettedInvoiceEventPublisherBase)
       throw new AggregateRootException(
-        "InvoiceCompanyAddedEventPublisherBase is not defined"
+        "InvoiceCompanyCreatedEventPublisherBase is not defined"
       );
 
-    return this.invoiceCompanyAddedEventPublisherBase.response[0];
+    return this.gettedInvoiceEventPublisherBase.response[0];
+  }
+
+  async getCompany(companyId: string): Promise<CompanyDomainEntityBase> {
+    if (!this.gettedInvoiceEventPublisherBase)
+      throw new AggregateRootException(
+        "GettedInvoiceEventPublisherBase is not defined"
+      );
+
+    return this.createdInvoiceEventPublisherBase.response[0];
+  }
+
+  async deleteCompany(companyId: string): Promise<boolean> {
+    if (!this.gettedInvoiceEventPublisherBase)
+      throw new AggregateRootException(
+        "GettedInvoiceEventPublisherBase is not defined"
+      );
+
+    return this.createdInvoiceEventPublisherBase.response[0];
   }
 
   async createFee(fee: FeeDomainEntityBase): Promise<FeeDomainEntityBase> {
-    if (!this.invoiceFeeAddedEventPublisherBase)
+    if (!this.gettedInvoiceEventPublisherBase)
       throw new AggregateRootException(
-        "InvoiceFeeAddedEventPublisherBase is not defined"
+        "InvoiceFeeCreatedEventPublisherBase is not defined"
       );
 
-    return this.invoiceFeeAddedEventPublisherBase.response[0];
+    return this.gettedInvoiceEventPublisherBase.response[0];
+  }
+
+  async getFee(feeId: string): Promise<FeeDomainEntityBase> {
+    if (!this.gettedInvoiceEventPublisherBase)
+      throw new AggregateRootException(
+        "GettedInvoiceEventPublisherBase is not defined"
+      );
+
+    return this.createdInvoiceEventPublisherBase.response[0];
+  }
+
+  async deleteFee(feeId: string): Promise<boolean> {
+    if (!this.gettedInvoiceEventPublisherBase)
+      throw new AggregateRootException(
+        "GettedInvoiceEventPublisherBase is not defined"
+      );
+
+    return this.createdInvoiceEventPublisherBase.response[0];
   }
 
   async updateCompanyName(
-    domain: InvoiceDomainEntityBase,
-    newCompanyName: CompanyNameValueObject
+    companyId: string,
+    newCompanyName: CompanyDomainEntityBase
   ): Promise<CompanyDomainEntityBase> {
-    if (!this.invoiceCompanyUpdatedEventPublisherBase)
+    if (!this.gettedInvoiceEventPublisherBase)
       throw new AggregateRootException(
         "InvoiceCompanyNameUpdatedEventPublisherBase is not defined"
       );
 
-    return this.invoiceCompanyUpdatedEventPublisherBase.response[0];
+    return this.gettedInvoiceEventPublisherBase.response[0];
   }
 
   async updateCompanyBankAccount(
-    domain: InvoiceDomainEntityBase,
-    newCompanyBankAccount: CompanyBankAccountValueObject
+    companyId: string,
+    newCompanyBankAccount: CompanyDomainEntityBase
   ): Promise<CompanyDomainEntityBase> {
-    if (!this.invoiceCompanyUpdatedEventPublisherBase)
+    if (!this.gettedInvoiceEventPublisherBase)
       throw new AggregateRootException(
         "InvoiceCompanyBankAccountUpdatedEventPublisherBase is not defined"
       );
 
-    return this.invoiceCompanyUpdatedEventPublisherBase.response[0];
+    return this.gettedInvoiceEventPublisherBase.response[0];
   }
 
   async updateFeeCharge(
-    domain: InvoiceDomainEntityBase,
-    newFee: FeeChargeValueObject
+    feeId: string,
+    newFee: FeeDomainEntityBase
   ): Promise<FeeDomainEntityBase> {
-    if (!this.invoiceFeeUpdatedEventPublisherBase)
+    if (!this.gettedInvoiceEventPublisherBase)
       throw new AggregateRootException(
         "InvoiceFeeChargeUpdatedEventPublisherBase is not defined"
       );
 
-    return this.invoiceFeeUpdatedEventPublisherBase.response[0];
+    return this.gettedInvoiceEventPublisherBase.response[0];
   }
 
   async updateFeeTax(
-    domain: InvoiceDomainEntityBase,
-    newFee: FeeTaxValueObject
+    feeId: string,
+    newFee: FeeDomainEntityBase
   ): Promise<FeeDomainEntityBase> {
-    if (!this.invoiceFeeUpdatedEventPublisherBase)
+    if (!this.gettedInvoiceEventPublisherBase)
       throw new AggregateRootException(
         "InvoiceFeeTaxUpdatedEventPublisherBase is not defined"
       );
 
-    return this.invoiceFeeUpdatedEventPublisherBase.response[0];
+    return this.gettedInvoiceEventPublisherBase.response[0];
   }
 
   async changeStatus(invoiceId: string): Promise<boolean> {
@@ -180,3 +199,5 @@ export class InvoiceAggregate implements IInvoiceDomainService {
     return this.invoiceStatusChangedEventPublisherBase.response[0];
   }
 }
+
+//TODO

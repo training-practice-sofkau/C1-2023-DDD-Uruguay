@@ -1,6 +1,6 @@
-import { KitModelValueObject } from "../../../value-objects/order";
+import { KitModelValueObject } from '../../../value-objects/order';
 
 export interface IUpdateKitModelCommand {
-  orderId: string;
-  model: KitModelValueObject;
+  kitId: string;
+  model: string | KitModelValueObject;
 }

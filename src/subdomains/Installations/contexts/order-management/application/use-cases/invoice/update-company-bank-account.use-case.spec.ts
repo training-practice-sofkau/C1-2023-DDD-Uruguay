@@ -2,14 +2,18 @@ import {
   IUseCase,
   ValueObjectErrorHandler,
   ValueObjectException,
-} from "../../../../../../../libs/sofka";
-import { InvoiceAggregate } from "../../../domain/aggregates";
-import { CompanyDomainEntityBase } from "../../../domain/entities";
-import { RegisteredInvoiceEventPublisherBase } from "../../../domain/events";
-import { IUpdateCompanyNameCommand } from "../../../domain/interfaces/commands/invoice";
-import { IUpdateCompanyNameResponse } from "../../../domain/interfaces/responses/invoice";
-import { IInvoiceDomainService } from "../../../domain/services";
-import { CompanyNameValueObject } from "../../../domain/value-objects";
+} from '../../../../../../../libs/sofka';
+import { InvoiceAggregate } from '../../../domain/aggregates';
+import { CompanyDomainEntityBase } from '../../../domain/entities';
+import { CreatedInvoiceEventPublisherBase } from '../../../domain/events';
+import {
+  IUpdateCompanyNameCommand,
+} from '../../../domain/interfaces/commands/invoice';
+import {
+  IUpdateCompanyNameResponse,
+} from '../../../domain/interfaces/responses/invoice';
+import { IInvoiceDomainService } from '../../../domain/services';
+import { CompanyNameValueObject } from '../../../domain/value-objects';
 
 export class UpdateCompanyNameUseCase<
     Command extends IUpdateCompanyNameCommand = IUpdateCompanyNameCommand,
@@ -22,12 +26,12 @@ export class UpdateCompanyNameUseCase<
 
   constructor(
     private readonly invoiceService: IInvoiceDomainService,
-    private readonly registeredInvoiceEventPublisherBase: RegisteredInvoiceEventPublisherBase
+    private readonly createdInvoiceEventPublisherBase: CreatedInvoiceEventPublisherBase
   ) {
     super();
     this.invoiceAggregateRoot = new InvoiceAggregate({
       invoiceService,
-      registeredInvoiceEventPublisherBase,
+      createdInvoiceEventPublisherBase,
     });
   }
 

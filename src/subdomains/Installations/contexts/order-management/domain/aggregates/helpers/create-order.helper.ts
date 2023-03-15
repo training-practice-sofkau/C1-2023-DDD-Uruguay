@@ -1,14 +1,14 @@
-import { OrderDomainEntityBase } from "../../entities";
-import { RegisteredOrderEventPublisherBase } from "../../events";
-import { IOrderDomainService } from "../../services";
+import { OrderDomainEntityBase } from '../../entities';
+import { CreatedOrderEventPublisherBase } from '../../events';
+import { IOrderDomainService } from '../../services';
 
 export const CreateOrder = async (
   order: OrderDomainEntityBase,
   orderService: IOrderDomainService,
-  registeredOrderEventPublisher: RegisteredOrderEventPublisherBase
+  createdOrderEventPublisher: CreatedOrderEventPublisherBase
 ): Promise<OrderDomainEntityBase | null> => {
-  const result = await orderService.createOrder(order);
-  registeredOrderEventPublisher.response = result;
-  registeredOrderEventPublisher.publish();
-  return result;
+  //const result = await orderService.createOrder(order);
+  createdOrderEventPublisher.response = order;
+  createdOrderEventPublisher.publish();
+  return order;
 };

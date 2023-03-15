@@ -4,6 +4,6 @@ export interface IFeeDomainService<T extends FeeDomainEntityBase = FeeDomainEnti
   createFee(fee: T): Promise<T>;
   getFee(feeId: string): Promise<T>;
   deleteFee(feeId: string): Promise<boolean>;
-  updateFeeCharge(feeId: string, newFeeCharge: T): Promise<T>;
+  updateFeeCharge(feeId: string, newFeeCharge: T ): Promise<T>;
   updateFeeTax(feeId: string, newFeeTax: T): Promise<T>;
 }

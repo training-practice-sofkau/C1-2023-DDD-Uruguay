@@ -13,18 +13,18 @@ export class CompanyMySqlEntity extends CompanyDomainEntityBase {
     @PrimaryGeneratedColumn('uuid')
     companyId: string;
 
-    @Column()
+    @Column({nullable: true})
     name: string;
 
-    @Column()
+    @Column({nullable: true})
     bankAccount: string;
 
-    @Column()
+    @Column({type: 'bigint', nullable: true})
     createdAt: number;
-    
-    @Column()
+  
+    @Column({type: 'bigint', nullable: true})
     updatedAt: number;
-
-    @Column()
+  
+    @Column({type: 'bigint', nullable: true})
     deletedAt: number;
 }

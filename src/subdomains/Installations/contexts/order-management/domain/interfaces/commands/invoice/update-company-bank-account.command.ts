@@ -1,6 +1,6 @@
-import { CompanyBankAccountValueObject } from "../../../value-objects/invoice";
+import { CompanyBankAccountValueObject } from '../../../value-objects/invoice';
 
 export interface IUpdateCompanyBankAccountCommand {
-  invoiceId: string;
-  bankAccount: CompanyBankAccountValueObject;
+  companyId: string;
+  bankAccount: string | CompanyBankAccountValueObject;
 }
