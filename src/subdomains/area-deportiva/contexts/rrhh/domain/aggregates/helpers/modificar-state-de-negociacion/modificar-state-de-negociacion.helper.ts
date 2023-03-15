@@ -1,14 +1,15 @@
 
 import { AggregateRootException } from "src/libs";
 import { NegociacionDomainEntity } from "../../../entities";
-import { EquipoNuevoModificadoEventPublisher } from "../../../events/publishers/negociacion/equipo-nuevo-modificado.event-publisher";
 import { INegociacionDomainService } from "../../../services";
+import { EquipoNuevoNegociacionModificadoEventPublisher } from "../../../events/publishers/negociacion";
+import { StateNegociacionModificadoEventPublisher } from '../../../events/publishers/negociacion/state-modificado.event-publisher';
 
 export const ModificarStateDeNegociacionHelper = async (
     negociacionId:string,
     entity: NegociacionDomainEntity,
     service?: INegociacionDomainService,
-    event?: EquipoNuevoModificadoEventPublisher,
+    event?:StateNegociacionModificadoEventPublisher,
 ):Promise<NegociacionDomainEntity> => { 
     
     if(!service)

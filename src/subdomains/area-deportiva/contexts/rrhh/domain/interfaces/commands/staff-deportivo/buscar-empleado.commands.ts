@@ -1,3 +1,3 @@
 export interface IBuscarEmpleadoCommands {
-    empleadoId: string ;
+    empleadoId?: string;
 }

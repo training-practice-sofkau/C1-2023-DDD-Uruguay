@@ -1,4 +1,4 @@
-export interface IModificarStateCommands {
+export interface IModificarStateTraspasoCommands {
     id:string;
     state:boolean;
 }

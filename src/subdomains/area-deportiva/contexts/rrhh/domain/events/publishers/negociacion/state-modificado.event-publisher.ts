@@ -1,7 +1,7 @@
 import { EventPublisherBase } from "src/libs";
 import { NegociacionDomainEntity } from "../../../entities";
 
-export abstract class StateModificadoEventPublisher<Response = NegociacionDomainEntity>
+export abstract class StateNegociacionModificadoEventPublisher<Response = NegociacionDomainEntity>
 extends EventPublisherBase<Response>{
     
 publish<Result = any>(): Promise<Result> {

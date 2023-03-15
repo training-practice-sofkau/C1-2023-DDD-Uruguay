@@ -1,0 +1,134 @@
+version: '3.7'
+
+services:
+
+  #mongodb:
+  #  image: mongo
+  #  restart: always
+  #  container_name: MongoDB
+  #  ports:
+  #    - 27017:27017
+  #    #environment:
+  #    #MONGO_INITDB_ROOT_USERNAME: root
+  #    #MONGO_INITDB_ROOT_PASSWORD: password
+  #  volumes:
+  #    - data-mongo:/data/db
+
+  #redisdb:
+  #  image: redis
+  #  restart: always
+  #  container_name: Redis
+  #  ports:
+  #    - 6379:6379
+  #  volumes:
+  #    - data-redis:/data
+
+  #postgres:
+  #  image: postgres
+  #  restart: always
+  #  container_name: PostgreSQL
+  #  ports:
+  #    - 5432:5432
+  #  environment:
+  #    POSTGRES_USER: root
+  #    POSTGRES_PASSWORD: password
+  #    POSTGRES_HOST_AUTH_METHOD: md5
+  #    PGDATA: /var/lib/postgresql/data/pgdata
+  #  volumes:
+  #    - data-postgres:/var/lib/postgresql/data
+
+  # mysql:
+  #    image: mysql
+  #    restart: always
+  #    container_name: MySQL
+  #    ports:
+  #     - 3307:3306
+  #    volumes:
+  #     - data:/var/lib/mysql
+  #    environment:
+  #     - MYSQL_ROOT_PASSWORD=
+  #     - MYSQL_PASSWORD=
+  #     - MYSQL_USER=root
+
+  #mariadb:
+  #  image: mariadb
+  #  restart: always
+  #  container_name: MariaDB
+  #  ports:
+  #    - 3306:3306
+  #  environment:
+  #    MARIADB_ROOT_PASSWORD: password
+  #  volumes:
+  #    - data-mariadb:/var/lib/mysql
+
+  # rabbitmq:
+  #  image: rabbitmq
+  #  restart: always
+  #  container_name: RabbitMQ
+  #  ports:
+  #    - 5672:5672
+  #  volumes:
+  #    - data-rabbitmq:/var/lib/rabbitmq/mnesia/rabbit@campus
+
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    container_name: ZooKeeper
+    restart: always
+    ports:
+      - 2181:2181
+    volumes:
+      - "data-zookeeper:/bitnami"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+      - ZOO_ENABLE_AUTH=no
+
+  kafka:
+    image: docker.io/bitnami/kafka:3.4
+    container_name: Kafka
+    restart: always
+    ports:
+      - 9092:9092
+    volumes:
+      - "data-kafka:/bitnami"
+    environment:
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+
+  #localstack:
+  #  container_name: LocalStack
+  #  image: localstack/localstack
+  #  restart: always
+  #  ports:
+  #    - "4566:4566"
+  # environment:
+  #    - DEBUG=1
+  #    - SERVICES=dynamodb,secretsmanager
+  #    - DATA_DIR=${TMPDIR}/localstack/data
+  #    - HOST_TMP_FOLDER=${TMPDIR}
+  #  volumes:
+  #    - ./localstack:/var/lib/localstack/data
+
+volumes:
+  data-rabbitmq:
+    name: data-rabbitmq
+    driver: local
+  data-mariadb:
+    name: data-mariadb
+    driver: local
+  data-postgres:
+    name: data-postgres
+    driver: local
+  data-redis:
+    name: data-redis
+    driver: local
+  data-mongo:
+    name: data-mongo
+    driver: local
+  data-zookeeper:
+    driver: local
+  data-kafka:
+    driver: local

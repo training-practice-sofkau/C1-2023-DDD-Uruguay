@@ -7,7 +7,7 @@ export abstract class StateModificadoEventPublisher
         
     publish<Result = any>(): Promise<Result> {
         return this.emit(
-            'management_system.registered-order',
+            'rrhh.state-cesion-modificado.',
             JSON.stringify({ data: this.response })
         )
     }

@@ -7,7 +7,7 @@ export abstract class NegociacionAgregadaEventPublisher
         
     publish<Result = any>(): Promise<Result> {
         return this.emit(
-            'management_system.registered-order',
+            'rrhh.negociacion-creada.',
             JSON.stringify({ data: this.response })
         )
     }

@@ -4,10 +4,10 @@ import { EmpleadoDomainEntity } from '../../../entities/empleado/EmpleadoDomainE
 export abstract class DocumentoModificadoEventPublisher<Response = EmpleadoDomainEntity>
 extends EventPublisherBase<Response>{
     
-publish<Result = any>(): Promise<Result> {
-    return this.emit(
-        'management_system.registered-order',
-        JSON.stringify({ data: this.response })
-    )
-}
+    publish<Result = any>(): Promise<Result> {
+        return this.emit(
+            'rrhh.documento-empleado-modificado.',
+            JSON.stringify({ data: this.response })
+        )
+    }
 }

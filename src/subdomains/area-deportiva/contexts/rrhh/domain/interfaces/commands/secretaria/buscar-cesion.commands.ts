@@ -1,6 +1,6 @@
 
 export interface IBuscarCesionCommands {
 
-    cesionId:string;
+    cesionId?:string;
 
 }

@@ -13,6 +13,7 @@ import { BuscarTramiteUseCase } from './buscar-tramite.use-case';
 import { BuscarEmpleadoUseCase } from './buscar-empleado.use-case';
 import { IdValueObject } from '../../../domain/value-objects';
 import { ICrearStaffDeportivoCommands } from '../../../domain/interfaces/commands/staff-deportivo';
+import { IEmpleadoDomainService, ITramiteDomainService } from '../../../domain/services';
 
 
 export class CrearStaffDeportivoUseCase 
@@ -21,14 +22,16 @@ export class CrearStaffDeportivoUseCase
         
         private readonly aggregateRoot:StaffDeportivoAggregate;
 
-        constructor(
+            constructor(
             private readonly staffDeportivoService: IStaffDeportivoDomainService,
+            private readonly empleadoService: IEmpleadoDomainService,
+            private readonly tramiteService: ITramiteDomainService,
             private readonly staffDeportivoCreadoEvent : StaffDeportivoCreadoEventPublisher,
-            private readonly tamiteBuscadoEvent : TramiteBuscadoEventPublisher,
+            private readonly tramiteBuscadoEvent : TramiteBuscadoEventPublisher,
             private readonly empleadoBuscadoEvent : EmpleadoBuscadoEventPublisher,
         ){
             super();
-            this.aggregateRoot = new StaffDeportivoAggregate({staffDeportivoService,staffDeportivoCreadoEvent,tamiteBuscadoEvent,empleadoBuscadoEvent});
+            this.aggregateRoot = new StaffDeportivoAggregate({staffDeportivoService,staffDeportivoCreadoEvent,tramiteBuscadoEvent,empleadoBuscadoEvent});
         }
    
     async execute(command: ICrearStaffDeportivoCommands): Promise<IStaffDeportivoCreadoResponse> {
@@ -50,8 +53,8 @@ export class CrearStaffDeportivoUseCase
             this.getErrors(),
             );
             
-        const obtenerTramite = new BuscarTramiteUseCase(this.staffDeportivoService,this.tamiteBuscadoEvent);
-        const obtnerEmpleado = new BuscarEmpleadoUseCase(this.staffDeportivoService,this.empleadoBuscadoEvent);
+        const obtenerTramite = new BuscarTramiteUseCase(this.tramiteService,this.tramiteBuscadoEvent);
+        const obtnerEmpleado = new BuscarEmpleadoUseCase(this.empleadoService,this.empleadoBuscadoEvent);
        
         // Ejecución de la lógica del caso de uso
         const entity = new StaffDeportivoDomainEntity({

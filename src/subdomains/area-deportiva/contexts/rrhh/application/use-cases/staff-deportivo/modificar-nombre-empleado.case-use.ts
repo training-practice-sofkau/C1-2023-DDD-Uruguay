@@ -5,8 +5,8 @@ import { EmpleadoBuscadoEventPublisher } from "../../../domain/events/publishers
 import { StaffDeportivoAggregate } from "../../../domain/aggregates";
 import { EmpleadoDomainEntity, IEmpleadoDomainEntity } from "../../../domain/entities";
 import { INombreModificadoResponse } from "../../../domain/interfaces/responses/empleado";
-import { IStaffDeportivoDomainService } from "../../../domain/services";
 import { IdValueObject, NombreValueObject } from "../../../domain/value-objects";
+import { IEmpleadoDomainService } from '../../../domain/services/staff-Deportivo/empleado.domain-service';
 
 export class ModificarNombreEmpleadoUseCase 
     extends ValueObjectErrorHandler
@@ -15,12 +15,11 @@ export class ModificarNombreEmpleadoUseCase
         private readonly aggregateRoot:StaffDeportivoAggregate;
 
         constructor(
-            private readonly staffDeportivoService: IStaffDeportivoDomainService,
+            private readonly empleadoService: IEmpleadoDomainService,
             private readonly nombreModificadoEvent : NombreModificadoEventPublisher,
-            private readonly empleadoBuscadoEvent : EmpleadoBuscadoEventPublisher,
         ){
             super();
-            this.aggregateRoot = new StaffDeportivoAggregate({staffDeportivoService,nombreModificadoEvent});
+            this.aggregateRoot = new StaffDeportivoAggregate({empleadoService,nombreModificadoEvent,});
         }
    
 

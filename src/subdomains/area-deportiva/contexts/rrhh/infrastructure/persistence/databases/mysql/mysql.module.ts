@@ -18,6 +18,9 @@ import { CesionMySqlService } from './services/cesion.service';
 import { TraspasoMySqlService } from './services/traspaso.service';
 import { NegociacionMySqlService } from './services/negociacion.service';
 import { StaffDeportivoMySqlEntity, EmpleadoMySqlEntity, TramiteMySqlEntity, NegociacionMySqlEntity, SecretariaMySqlEntity, ContratoMySqlEntity, TraspasoMySqlEntity, CesionMySqlEntity } from './entities';
+import { EventMySqlEntity } from './entities/event-mysql.entity';
+import { EventRepository } from './repositories/event.repository';
+import { EventMySqlService } from './services/event.service';
 
 @Module({
   imports: [
@@ -33,6 +36,8 @@ import { StaffDeportivoMySqlEntity, EmpleadoMySqlEntity, TramiteMySqlEntity, Neg
       ContratoMySqlEntity,
       TraspasoMySqlEntity,
       CesionMySqlEntity,
+
+      EventMySqlEntity
     ]),
   ],
   controllers: [],
@@ -49,6 +54,8 @@ import { StaffDeportivoMySqlEntity, EmpleadoMySqlEntity, TramiteMySqlEntity, Neg
     TraspasoMySqlService,
     NegociacionMySqlService,
 
+    EventMySqlService,
+
     StaffDeportivoRepository,
     EmpleadoRepository,
     TramiteRepository,
@@ -56,7 +63,10 @@ import { StaffDeportivoMySqlEntity, EmpleadoMySqlEntity, TramiteMySqlEntity, Neg
     ContratoRepository,
     CesionRepository,
     NegociacionRepository,
-    TraspasoRepository
+    TraspasoRepository,
+
+    EventRepository,
+
   ],
   exports: [
     StaffDeportivoMySqlService,
@@ -68,6 +78,8 @@ import { StaffDeportivoMySqlEntity, EmpleadoMySqlEntity, TramiteMySqlEntity, Neg
     TraspasoMySqlService,
     NegociacionMySqlService,
 
+    EventMySqlService,
+
     StaffDeportivoRepository,
     EmpleadoRepository,
     TramiteRepository,
@@ -75,7 +87,9 @@ import { StaffDeportivoMySqlEntity, EmpleadoMySqlEntity, TramiteMySqlEntity, Neg
     ContratoRepository,
     CesionRepository,
     NegociacionRepository,
-    TraspasoRepository
+    TraspasoRepository,
+
+    EventRepository,
     ],
 })
 export class MySqlModule {}

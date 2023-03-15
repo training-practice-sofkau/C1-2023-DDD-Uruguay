@@ -1,13 +1,12 @@
 import { ValueObjectErrorHandler, IUseCase, ValueObjectException } from "src/libs";
 
-import { EmpleadoBuscadoEventPublisher } from "../../../domain/events/publishers/staff-deporitvo/empleado-buscado.event-publisher";
 import { StaffDeportivoAggregate } from "../../../domain/aggregates";
 import { EmpleadoDomainEntity, IEmpleadoDomainEntity } from "../../../domain/entities";
 import { DocumentoModificadoEventPublisher } from "../../../domain/events/publishers";
 import { IModificarDocumentoCommands } from "../../../domain/interfaces/commands/empleado";
 import { IDocumentoModificadoResponse } from "../../../domain/interfaces/responses/empleado";
-import { IStaffDeportivoDomainService } from "../../../domain/services";
 import { IdValueObject, DocumentoValueObject } from "../../../domain/value-objects";
+import { IEmpleadoDomainService } from '../../../domain/services/staff-Deportivo/empleado.domain-service';
 
 export class ModificarDocumentoEmpleadoUseCase 
     extends ValueObjectErrorHandler
@@ -16,12 +15,11 @@ export class ModificarDocumentoEmpleadoUseCase
         private readonly aggregateRoot:StaffDeportivoAggregate;
 
         constructor(
-            private readonly staffDeportivoService: IStaffDeportivoDomainService,
+            private readonly empleadoService: IEmpleadoDomainService,
             private readonly documentoModificadoEvent : DocumentoModificadoEventPublisher,
-            private readonly empleadoBuscadoEvent : EmpleadoBuscadoEventPublisher,
         ){
             super();
-            this.aggregateRoot = new StaffDeportivoAggregate({staffDeportivoService,documentoModificadoEvent});
+            this.aggregateRoot = new StaffDeportivoAggregate({empleadoService,documentoModificadoEvent});
         }
    
 

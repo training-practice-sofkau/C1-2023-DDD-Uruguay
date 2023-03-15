@@ -12,6 +12,7 @@ import { BuscarContatoUseCase } from './buscar-contrato.use-case';
 import { BuscarCesionUseCase } from './buscar-cesion.use-case';
 import { BuscarTraspasoUseCase } from './buscar-traspaso.use-case';
 import { IdValueObject } from "../../../domain/value-objects";
+import { ICesionDomainService, IContratoDomainService, ITraspasoDomainService } from 'src/subdomains/area-deportiva/contexts/rrhh/domain/services';
 
 
 export class CrearSecretariaUseCase extends ValueObjectErrorHandler
@@ -21,6 +22,10 @@ implements IUseCase<ICrearSecretariaCommands, ISecretariaCreadaResponse> {
 
     constructor(
         private readonly secretariaService: ISecretariaDomainService,
+        private readonly contratoService: IContratoDomainService,
+        private readonly cesionService: ICesionDomainService,
+        private readonly traspasoService: ITraspasoDomainService,
+
         private readonly secretariaCreadaEvent : secretariaCreadaEventPublisher,
         private readonly contratoBuscadoEvent : ContratoBuscadaEventPublisher,
         private readonly cesionBuscadaEvent : CesionBuscadaEventPublisher,
@@ -31,6 +36,10 @@ implements IUseCase<ICrearSecretariaCommands, ISecretariaCreadaResponse> {
         this.aggregateRoot = new SecretariaAggregate(
             {
                 secretariaService,
+                contratoService,
+                cesionService,
+                traspasoService,
+
                 secretariaCreadaEvent,
                 contratoBuscadoEvent,
                 cesionBuscadaEvent,
@@ -66,9 +75,9 @@ implements IUseCase<ICrearSecretariaCommands, ISecretariaCreadaResponse> {
             );
             
         
-        const obtenerContrato = new BuscarContatoUseCase(this.secretariaService,this.contratoBuscadoEvent);
-        const obtenerCesion = new BuscarCesionUseCase(this.secretariaService,this.cesionBuscadaEvent);
-        const obtenerTraspaso = new BuscarTraspasoUseCase(this.secretariaService,this.traspasoBuscadoEvent);
+        const obtenerContrato = new BuscarContatoUseCase(this.contratoService,this.contratoBuscadoEvent);
+        const obtenerCesion = new BuscarCesionUseCase(this.cesionService,this.cesionBuscadaEvent);
+        const obtenerTraspaso = new BuscarTraspasoUseCase(this.traspasoService,this.traspasoBuscadoEvent);
     
         // Ejecución de la lógica del caso de uso
         const entity = new SecretariaDomainEntity({

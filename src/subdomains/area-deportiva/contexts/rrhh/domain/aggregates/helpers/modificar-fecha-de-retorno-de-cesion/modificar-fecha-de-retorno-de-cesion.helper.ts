@@ -1,11 +1,11 @@
 import { AggregateRootException } from 'src/libs';
 import { CesionDomainEntity } from '../../../entities/cesion/cesion.domain-entity';
 import { ICesionDomainService } from '../../../services/secretaria/cesion.domain-service';
-import { EquipoSalidaModificadoEventPublisher } from '../../../events/publishers/negociacion/equipo-salida-modificado.event-publisher';
+import { FechaContratoModificadaEventPublisher } from '../../../events/publishers/contrato/fecha-modificada.event-publisher';
 export const  ModificarFechaDeRetornoDeCesionHelper = async (
     entity: CesionDomainEntity,
     service?: ICesionDomainService,
-    event?: EquipoSalidaModificadoEventPublisher,
+    event?: FechaContratoModificadaEventPublisher,
 ):Promise<CesionDomainEntity> => { 
     
     if(!service)

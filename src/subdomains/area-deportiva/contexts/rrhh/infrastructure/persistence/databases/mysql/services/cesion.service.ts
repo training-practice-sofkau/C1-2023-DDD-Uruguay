@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ICesionDomainService } from '../../../../../domain/services/secretaria/cesion.domain-service';
 import { CesionMySqlEntity } from '../entities/cesion-mysql.entity';
 import { CesionRepository } from '../repositories/cesion.repository';

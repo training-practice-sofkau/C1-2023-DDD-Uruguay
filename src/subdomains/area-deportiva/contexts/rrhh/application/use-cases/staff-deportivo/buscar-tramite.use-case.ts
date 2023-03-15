@@ -6,6 +6,7 @@ import { ItramiteBuscadoResponse } from '../../../domain/interfaces/responses/st
 
 import { IBuscarTramiteCommands } from '../../../domain/interfaces/commands/staff-deportivo/buscar-tramite.commands';
 import { StaffDeportivoAggregate } from "../../../domain/aggregates";
+import { ITramiteDomainService } from "../../../domain/services";
 
 export class BuscarTramiteUseCase extends ValueObjectErrorHandler
     implements IUseCase<IBuscarTramiteCommands, ItramiteBuscadoResponse> {
@@ -13,11 +14,11 @@ export class BuscarTramiteUseCase extends ValueObjectErrorHandler
     private readonly aggregateRoot: StaffDeportivoAggregate;
 
     constructor(
-        private readonly staffDeportivoService: IStaffDeportivoDomainService,
-        private readonly tamiteBuscadoEvent: TramiteBuscadoEventPublisher,
+        private readonly tramiteService: ITramiteDomainService,
+        private readonly tramiteBuscadoEvent: TramiteBuscadoEventPublisher,
     ) {
         super();
-        this.aggregateRoot = new StaffDeportivoAggregate({ staffDeportivoService, tamiteBuscadoEvent });
+        this.aggregateRoot = new StaffDeportivoAggregate({ tramiteService, tramiteBuscadoEvent });
     }
 
     //Ejecutar el comando , usando otra funcion para crear lo que necesita el comando 

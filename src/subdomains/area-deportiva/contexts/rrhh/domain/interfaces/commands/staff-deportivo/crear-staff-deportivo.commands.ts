@@ -2,7 +2,7 @@
 export interface ICrearStaffDeportivoCommands {
     
     staffDeportivoId?: string ;
-    nombre: string;
+    nombre?: string;
     tamite?: string;
     empleado?: string;
 }

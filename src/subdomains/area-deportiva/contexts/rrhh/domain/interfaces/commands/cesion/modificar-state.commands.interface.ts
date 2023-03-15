@@ -1,4 +1,4 @@
-export interface IModificarStateCommands {
-    negocaicionId: string ;
+export interface IModificarStateCesionCommands {
+    cesionid: string ;
     state : boolean ;
 }

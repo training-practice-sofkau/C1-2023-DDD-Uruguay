@@ -3,19 +3,19 @@ import { IContratoBuscadaResponse } from '../../../domain/interfaces/responses/s
 import { ContratoBuscadaEventPublisher } from '../../../domain/events/publishers/secretaria/contrato-buscado.event-publisher';
 import { ValueObjectErrorHandler, IUseCase } from 'src/libs';
 import { SecretariaAggregate } from '../../../domain/aggregates';
-import { ISecretariaDomainService } from '../../../domain/services';
+import { IContratoDomainService } from '../../../domain/services';
 export class BuscarContatoUseCase extends ValueObjectErrorHandler
 implements IUseCase<IBuscarContratoCommands, IContratoBuscadaResponse> {
 
     private readonly aggregateRoot: SecretariaAggregate;
 
     constructor(
-        private readonly secretariaService: ISecretariaDomainService,
+        private readonly contratoService: IContratoDomainService,
         private readonly contratoBuscadoEvent: ContratoBuscadaEventPublisher
         ,
     ) {
         super();
-        this.aggregateRoot = new SecretariaAggregate({ secretariaService, contratoBuscadoEvent });
+        this.aggregateRoot = new SecretariaAggregate({ contratoService, contratoBuscadoEvent });
     }
     
         //Ejecutar el comando , usando otra funcion para crear lo que necesita el comando 

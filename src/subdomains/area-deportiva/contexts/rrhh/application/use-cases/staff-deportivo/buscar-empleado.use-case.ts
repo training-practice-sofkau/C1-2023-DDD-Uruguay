@@ -4,7 +4,7 @@ import { EmpleadoDomainEntity } from '../../../domain/entities/empleado/Empleado
 import { EmpleadoBuscadoEventPublisher } from '../../../domain/events/publishers/staff-deporitvo/empleado-buscado.event-publisher';
 import { IEmpleadoBuscadoResponse } from '../../../domain/interfaces/responses/staff-deportivo/empleado-buscado.response';
 import { StaffDeportivoAggregate } from "../../../domain/aggregates";
-import { IStaffDeportivoDomainService } from "../../../domain/services";
+import { IEmpleadoDomainService } from '../../../domain/services/staff-Deportivo/empleado.domain-service';
 
 export class BuscarEmpleadoUseCase extends ValueObjectErrorHandler
 implements IUseCase<IBuscarEmpleadoCommands, IEmpleadoBuscadoResponse> {
@@ -12,11 +12,11 @@ implements IUseCase<IBuscarEmpleadoCommands, IEmpleadoBuscadoResponse> {
 private readonly aggregateRoot: StaffDeportivoAggregate;
 
 constructor(
-    private readonly staffDeportivoService: IStaffDeportivoDomainService,
+    private readonly empleadoService: IEmpleadoDomainService,
     private readonly empleadoBuscadoEvent: EmpleadoBuscadoEventPublisher,
 ) {
     super();
-    this.aggregateRoot = new StaffDeportivoAggregate({ staffDeportivoService, empleadoBuscadoEvent });
+    this.aggregateRoot = new StaffDeportivoAggregate({ empleadoService, empleadoBuscadoEvent });
 }
 
 //Ejecutar el comando , usando otra funcion para crear lo que necesita el comando 

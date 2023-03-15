@@ -4,10 +4,10 @@ import { StateModificadoEventPublisher } from '../../../domain/events/publishers
 import { StateValueObject } from '../../../domain/value-objects/state/state.value-object';
 import { StaffDeportivoAggregate } from "../../../domain/aggregates";
 import { NegociacionDomainEntity, INegociacionDomainEntityInterface } from "../../../domain/entities";
-import { IModificarStateCommands } from "../../../domain/interfaces/commands/cesion";
 import { IStateModificadoResponse } from "../../../domain/interfaces/responses/cesion";
 import { IStaffDeportivoDomainService } from "../../../domain/services";
 import { IdValueObject } from "../../../domain/value-objects";
+import { IModificarStateCommands } from "../../../domain/interfaces/commands/negociacion";
 
 export class ModificarStateUseCase   extends ValueObjectErrorHandler
 implements IUseCase<IModificarStateCommands, IStateModificadoResponse> {
@@ -49,7 +49,7 @@ implements IUseCase<IModificarStateCommands, IStateModificadoResponse> {
     private createValueObject(command: IModificarStateCommands): INegociacionDomainEntityInterface {
 
         
-        const negociacionId = new IdValueObject(command.negocaicionId);
+        const negociacionId = new IdValueObject(command.id);
         const state= new StateValueObject(command.state);
 
         return {

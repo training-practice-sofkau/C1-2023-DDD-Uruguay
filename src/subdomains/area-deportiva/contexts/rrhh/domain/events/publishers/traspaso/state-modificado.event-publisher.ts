@@ -1,13 +1,13 @@
 import { EventPublisherBase } from "src/libs";
 import { TraspasoDomainEntity } from '../../../entities/traspaso/traspaso.domain-entity';
 
-export abstract class StateModificadoEventPublisher
+export abstract class StateTraspasoModificadoEventPublisher
  <Response = TraspasoDomainEntity>
     extends EventPublisherBase<Response>{
         
     publish<Result = any>(): Promise<Result> {
         return this.emit(
-            'management_system.registered-order',
+            'rrhh.state-traspaso-modificado.',
             JSON.stringify({ data: this.response })
         )
     }

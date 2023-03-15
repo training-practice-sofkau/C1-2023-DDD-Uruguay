@@ -1,5 +1,5 @@
 
 export interface IModificarSalarioEmpleadoCommands {
-    empleadoId: string ;
-    salario : number ;
+    empleadoId?: string ;
+    salario?: number ;
 }

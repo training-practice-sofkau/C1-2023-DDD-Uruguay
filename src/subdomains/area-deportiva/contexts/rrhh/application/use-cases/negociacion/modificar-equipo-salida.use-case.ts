@@ -1,11 +1,11 @@
 import { ValueObjectErrorHandler, IUseCase, ValueObjectException } from "src/libs";
 import { StaffDeportivoAggregate } from "../../../domain/aggregates";
 import { NegociacionDomainEntity, INegociacionDomainEntityInterface } from "../../../domain/entities";
-import { EquipoSalidaModificadoEventPublisher } from "../../../domain/events/publishers/negociacion";
 import { IModificarEquipoSalidaCommands } from "../../../domain/interfaces/commands/cesion";
 import { IEquipoSalidaModificadoResponse } from "../../../domain/interfaces/responses/cesion";
 import { IStaffDeportivoDomainService } from "../../../domain/services";
 import { IdValueObject } from "../../../domain/value-objects";
+import { EquipoSalidaNegociacionModificadoEventPublisher } from '../../../domain/events/publishers/negociacion/equipo-salida-modificado.event-publisher';
 
 export class ModificarEquipoSalidaUseCase   extends ValueObjectErrorHandler
 implements IUseCase<IModificarEquipoSalidaCommands, IEquipoSalidaModificadoResponse> {
@@ -14,7 +14,7 @@ implements IUseCase<IModificarEquipoSalidaCommands, IEquipoSalidaModificadoRespo
 
     constructor(
         private readonly staffDeportivoService: IStaffDeportivoDomainService,
-        private readonly negociacionEquipoSalidaModificadoEvent : EquipoSalidaModificadoEventPublisher,
+        private readonly negociacionEquipoSalidaModificadoEvent : EquipoSalidaNegociacionModificadoEventPublisher,
     ){
         super();
         this.aggregateRoot = new StaffDeportivoAggregate({staffDeportivoService,negociacionEquipoSalidaModificadoEvent});

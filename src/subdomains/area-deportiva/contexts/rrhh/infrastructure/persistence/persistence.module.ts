@@ -1,30 +1,31 @@
 import { Module } from '@nestjs/common';
 import { MySqlModule } from './databases/mysql/mysql.module';
-import { StaffDeportivoMySqlService, EmpleadoMySqlService, TramiteMySqlService, SecretariaMySqlService, ContratoMySqlService, CesionMySqlService, TraspasoMySqlService, NegociacionMySqlService } from './databases';
+import { StaffDeportivoService, EmpleadoService, TramiteService, SecretariaService, ContratoService, CesionService, TraspasoService, NegociacionService } from './services';
 
 @Module({
   imports: [MySqlModule],
   providers: [
-    StaffDeportivoMySqlService,
-    EmpleadoMySqlService,
-    TramiteMySqlService,
-    SecretariaMySqlService,
-    ContratoMySqlService,
-    CesionMySqlService,
-    TraspasoMySqlService,
-    NegociacionMySqlService,
+    
+    StaffDeportivoService,
+    EmpleadoService,
+    TramiteService,
+    SecretariaService,
+    ContratoService,
+    CesionService,
+    TraspasoService,
+    NegociacionService,
 
     
 ],
   exports: [
-    StaffDeportivoMySqlService,
-    EmpleadoMySqlService,
-    TramiteMySqlService,
-    SecretariaMySqlService,
-    ContratoMySqlService,
-    CesionMySqlService,
-    TraspasoMySqlService,
-    NegociacionMySqlService,
+    StaffDeportivoService,
+    EmpleadoService,
+    TramiteService,
+    SecretariaService,
+    ContratoService,
+    CesionService,
+    TraspasoService,
+    NegociacionService,
 
   ],
 })
