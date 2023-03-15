@@ -17,13 +17,13 @@ export class PlatoPrincipalDomainEntityBase implements IPlatoPrincipalDomainEnti
     createdAt?: number | Date;
 
     constructor(_data?: IPlatoPrincipalDomainEntity) {
-        if(_data.platoPrincipalId) this.platoPrincipalId = _data.platoPrincipalId;
+        if(_data?.platoPrincipalId) this.platoPrincipalId = _data.platoPrincipalId;
         else this.platoPrincipalId = uuid();
 
-        if(_data.nombre) this.nombre = _data.nombre;
+        if(_data?.nombre) this.nombre = _data.nombre;
 
-        if(_data.guarnicion) this.guarnicion = _data.guarnicion;
+        if(_data?.guarnicion) this.guarnicion = _data.guarnicion;
 
-        this.createdAt = new Date();
+        this.createdAt = new Date()
     }
 }

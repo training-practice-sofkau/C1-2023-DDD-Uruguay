@@ -27,21 +27,21 @@ export class PedidoDomainEntityBase implements IPedidoDomainEntity {
     createdAt?: number | Date;
 
     constructor(_data?: IPedidoDomainEntity) {
-        if(_data.pedidoId) this.pedidoId = _data.pedidoId;
+        if(_data?.pedidoId) this.pedidoId = _data.pedidoId;
         else this.pedidoId = uuid();
 
-        if(_data.estado) this.estado = _data.estado;
+        if(_data?.estado) this.estado = _data.estado;
 
-        if(_data.precio) this.precio = _data.precio;
+        if(_data?.precio) this.precio = _data.precio;
 
-        if(_data.entrada) this.entrada = _data.entrada;
+        if(_data?.entrada) this.entrada = _data.entrada;
 
-        if(_data.platoPrincipal) this.platoPrincipal = _data.platoPrincipal;
+        if(_data?.platoPrincipal) this.platoPrincipal = _data.platoPrincipal;
         
-        if(_data.bebida) this.bebida = _data.bebida;
+        if(_data?.bebida) this.bebida = _data.bebida;
         
-        if(_data.postre) this.postre = _data.postre;
+        if(_data?.postre) this.postre = _data.postre;
 
-        this.createdAt = new Date();
+        this.createdAt = new Date()
     }
 }

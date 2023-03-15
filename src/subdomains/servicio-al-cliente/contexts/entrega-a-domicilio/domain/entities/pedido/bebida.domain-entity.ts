@@ -17,12 +17,12 @@ export class BebidaDomainEntityBase implements IBebidaDomainEntity {
     createdAt?: number | Date;
 
     constructor(_data?: IBebidaDomainEntity) {
-        if(_data.bebidaId) this.bebidaId = _data.bebidaId;
+        if(_data?.bebidaId) this.bebidaId = _data.bebidaId;
         else this.bebidaId = uuid();
 
-        if(_data.nombre) this.nombre = _data.nombre;
+        if(_data?.nombre) this.nombre = _data.nombre;
 
-        if(_data.tamanio) this.tamanio = _data.tamanio;
+        if(_data?.tamanio) this.tamanio = _data.tamanio;
 
         this.createdAt = new Date();
     }

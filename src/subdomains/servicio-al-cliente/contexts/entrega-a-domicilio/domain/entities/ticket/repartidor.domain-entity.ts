@@ -17,13 +17,13 @@ export class RepartidorDomainEntityBase implements IRepartidorDomainEntity {
     createdAt?: number | Date;
 
     constructor(_data?: IRepartidorDomainEntity) {
-        if(_data.repartidorId) this.repartidorId = _data.repartidorId;
+        if(_data?.repartidorId) this.repartidorId = _data.repartidorId;
         else this.repartidorId = uuid();
 
-        if(_data.nombre) this.nombre = _data.nombre;
+        if(_data?.nombre) this.nombre = _data.nombre;
 
-        if(_data.vehiculo) this.vehiculo = _data.vehiculo;
+        if(_data?.vehiculo) this.vehiculo = _data.vehiculo;
 
-        this.createdAt = new Date();
+        this.createdAt = new Date()
     }
 }

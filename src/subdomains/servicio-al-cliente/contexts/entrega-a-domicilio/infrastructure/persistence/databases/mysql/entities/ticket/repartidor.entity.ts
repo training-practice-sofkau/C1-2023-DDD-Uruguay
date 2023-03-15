@@ -14,8 +14,8 @@ export class RepartidorMySqlEntity extends RepartidorDomainEntityBase {
     @Column()
     vehiculo: string;
 
-    @Column()
-    createdAt: Date | number;
+    @Column({ type: 'datetime' })
+    createdAt?: number | Date;
 
     @OneToOne( ()=> TicketMySqlEntity, (ticket)=> ticket.repartidor )
     ticket: TicketMySqlEntity;

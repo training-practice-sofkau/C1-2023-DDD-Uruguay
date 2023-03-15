@@ -17,13 +17,13 @@ export class ClienteDomainEntityBase implements IClienteDomainEntity {
     createdAt?: number | Date;
 
     constructor(_data?: IClienteDomainEntity) {
-        if(_data.clienteId) this.clienteId = _data.clienteId;
+        if(_data?.clienteId) this.clienteId = _data.clienteId;
         else this.clienteId = uuid();
 
-        if(_data.nombre) this.nombre = _data.nombre;
+        if(_data?.nombre) this.nombre = _data.nombre;
 
-        if(_data.direccion) this.direccion = _data.direccion;
+        if(_data?.direccion) this.direccion = _data.direccion;
 
-        this.createdAt = new Date();
+        this.createdAt = new Date()
     }
 }

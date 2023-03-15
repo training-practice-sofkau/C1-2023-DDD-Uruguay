@@ -19,15 +19,15 @@ export class TicketDomainEntityBase implements ITicketDomainEntity {
     createdAt?: number | Date;
 
     constructor(_data?: ITicketDomainEntity) {
-        if(_data.ticketId) this.ticketId = _data.ticketId;
+        if(_data?.ticketId) this.ticketId = _data.ticketId;
         else this.ticketId = uuid();
 
-        if(_data.cliente) this.cliente = _data.cliente;
+        if(_data?.cliente) this.cliente = _data.cliente;
 
-        if(_data.repartidor) this.repartidor = _data.repartidor;
+        if(_data?.repartidor) this.repartidor = _data.repartidor;
 
-        if(_data.listaPedidos) this.listaPedidos = _data.listaPedidos;
+        if(_data?.listaPedidos) this.listaPedidos = _data.listaPedidos;
 
-        this.createdAt = new Date();
+        this.createdAt = new Date()
     }
 }

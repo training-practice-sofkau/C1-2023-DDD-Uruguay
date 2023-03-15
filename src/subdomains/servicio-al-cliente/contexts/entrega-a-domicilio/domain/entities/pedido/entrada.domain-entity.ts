@@ -16,11 +16,11 @@ export class EntradaDomainEntityBase implements IEntradaDomainEntity {
     createdAt?: number | Date;
 
     constructor(_data?: IEntradaDomainEntity) {
-        if(_data.entradaId) this.entradaId = _data.entradaId;
+        if(_data?.entradaId) this.entradaId = _data.entradaId;
         else this.entradaId = uuid();
 
-        if(_data.nombre) this.nombre = _data.nombre;
+        if(_data?.nombre) this.nombre = _data.nombre;
 
-        this.createdAt = new Date();
+        this.createdAt = new Date()
     }
 }

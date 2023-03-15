@@ -21,7 +21,7 @@ export class PedidoMySqlEntity extends PedidoDomainEntityBase {
     @Column()
     precio?: number;
 
-    @Column()
+    @Column({ type: 'datetime' })
     createdAt?: number | Date;
 
 

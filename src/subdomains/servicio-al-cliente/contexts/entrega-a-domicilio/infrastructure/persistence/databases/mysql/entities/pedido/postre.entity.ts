@@ -17,8 +17,8 @@ export class PostreMySqlEntity extends PostreDomainEntityBase {
     @Column()
     esParaVeganos?: boolean;
 
-    @Column()
-    createdAt: Date | number;
+    @Column({ type: 'datetime' })
+    createdAt?: number | Date;
 
     @OneToOne( ()=> PedidoMySqlEntity, (pedido)=> pedido.postre )
     pedido: PedidoMySqlEntity;

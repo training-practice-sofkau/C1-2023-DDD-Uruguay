@@ -11,8 +11,8 @@ export class TicketMySqlEntity extends TicketDomainEntityBase {
     @PrimaryGeneratedColumn('uuid')
     ticketId: string;
 
-    @Column()
-    createdAt: number | Date;
+    @Column({ type: 'datetime' })
+    createdAt?: number | Date;
 
 
     @OneToOne(() => ClienteMySqlEntity, (cliente) => cliente.ticket,

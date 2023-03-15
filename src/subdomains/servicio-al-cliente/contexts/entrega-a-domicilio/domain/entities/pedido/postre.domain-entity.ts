@@ -18,15 +18,15 @@ export class PostreDomainEntityBase implements IPostreDomainEntity {
     createdAt?: number | Date;
 
     constructor(_data?: IPostreDomainEntity) {
-        if(_data.postreId) this.postreId = _data.postreId;
+        if(_data?.postreId) this.postreId = _data.postreId;
         else this.postreId = uuid();
 
-        if(_data.nombre) this.nombre = _data.nombre;
+        if(_data?.nombre) this.nombre = _data.nombre;
 
-        if(_data.tamanio) this.tamanio = _data.tamanio;
+        if(_data?.tamanio) this.tamanio = _data.tamanio;
 
-        if(_data.esParaVeganos) this.esParaVeganos = _data.esParaVeganos;
+        if(_data?.esParaVeganos) this.esParaVeganos = _data.esParaVeganos;
 
-        this.createdAt = new Date();
+        this.createdAt = new Date()
     }
 }

@@ -1,28 +1,20 @@
 import { Controller, Module } from "@nestjs/common";
 import {
     TicketController,
-    ClienteController,
-    RepartidorController,
-    PedidoController,
-    EntradaController,
-    PlatoPrincipalController,
-    PostreController,
-    BebidaController,
-} from "./controllers";
 
+    PedidoController,
+
+} from "./controllers";
+import { MessagingModule } from "./messaging/messaging.module";
 import { PersistenceModule } from "./persistence/persistence.module";
 
 @Module({
-    imports:[PersistenceModule],
+    imports:[PersistenceModule, MessagingModule],
     controllers:[
         TicketController,
-        ClienteController,
-        RepartidorController,
+
         PedidoController,
-        EntradaController,
-        PlatoPrincipalController,
-        PostreController,
-        BebidaController
+
     ],
     providers:[],
     exports:[]
