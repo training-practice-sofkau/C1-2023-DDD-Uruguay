@@ -1,10 +1,10 @@
-import { ValueObjectBase } from '../../../../../../../../libs/sofka/bases/object-value.base';
+import { ValueObjectBase } from '@sofka';
 import { IsEmptyOrNull } from '../../../../../../../../libs/validations/checkIsEmptyOrNull.validation';
 import { IsValidDate } from '../../../../../../../../libs/validations/date.validation';
 
-export class DateValueObject extends ValueObjectBase<Date> {
+export class DateValueObject extends ValueObjectBase<number |Date> {
 
-    constructor(value?: Date) {
+    constructor(value?: number | Date) {
         super(value ? value : null)
     }
 

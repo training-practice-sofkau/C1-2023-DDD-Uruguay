@@ -81,3 +81,13 @@ For this third delivery of the project, 12 use cases (minimum) were implemented 
 For this fourth deployment, all the services, repositories and entities corresponding to the infrastructure layer have been implemented, as requested.
 
 Some minor changes have been made to the model to simplify the implementation.
+
+## Fifth Delivery:
+
+For this delivery, as requested, a messaging broker was implemented.
+
+The respective commands, controllers, publishers and subscribers have been created.
+
+An event log was created with its respective entity (EventEntity), service and repository.
+
+There are bugs and some of the use case fail, but in future deployments these issues will be resolved.

@@ -1,5 +1,7 @@
 import { Module } from "@nestjs/common";
 import { MySqlModule } from "./databases/mysql";
+
+
 import { 
     InvoiceService, 
     DeviceService, 
@@ -8,7 +10,9 @@ import {
     RepairsService,
     RoleService,
     SupportTicketService,
-    WarrantyService
+    WarrantyService,
+    EventService
+    
 } from './services/';
 
 @Module({
@@ -21,7 +25,8 @@ import {
         RepairsService,
         RoleService,
         SupportTicketService,
-        WarrantyService
+        WarrantyService, 
+        EventService
     ],
     exports: [
         CustomerService,
@@ -31,7 +36,8 @@ import {
         RepairsService,
         RoleService,
         SupportTicketService,
-        WarrantyService
-    ]
+        WarrantyService, 
+        EventService
+        ]
 })
 export class PersistenceModule { }

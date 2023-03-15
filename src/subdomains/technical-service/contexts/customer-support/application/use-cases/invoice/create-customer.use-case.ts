@@ -12,7 +12,7 @@ import { PhoneValueObject, EmailValueObject, FullnameValueObject } from '../../.
 import { ValueObjectException, IUseCase, ValueObjectErrorHandler } from '@sofka';
 
 
-export class CreateCustomerUserCase<
+export class CreateCustomerUseCase<
     Command extends ICreateCustomerCommand = ICreateCustomerCommand,
     Response extends ICustomerCreatedResponse = ICustomerCreatedResponse
 > extends ValueObjectErrorHandler implements IUseCase<Command, Response>{
@@ -49,6 +49,7 @@ export class CreateCustomerUserCase<
      */
     executeCommand(command: Command): Promise<CustomerDomainEntityBase | null> {
         const VO = this.createValueObject(command);
+       
         this.validateValueObject(VO);
 
         const entity = this.createCustomerEntity(VO)

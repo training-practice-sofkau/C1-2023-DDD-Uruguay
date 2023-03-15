@@ -95,6 +95,8 @@ export class WarrantyRepository implements IRepository<WarrantyMySqlEntity>{
 
         result.deletedAt = Date.now();
 
+        this.repository.save(result);
+
         return true;
     }
 

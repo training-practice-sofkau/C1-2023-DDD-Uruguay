@@ -1,30 +1,29 @@
 import { CustomerDomainEntityBase } from "src/subdomains/technical-service/contexts/customer-support/domain/entities/invoice";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { PhoneValueObject, EmailValueObject, FullnameValueObject, UUIDValueObject } from '../../../../../domain/value-objects';
 
 @Entity('customer')
 export class CustomerMySqlEntity extends CustomerDomainEntityBase {
 
     @PrimaryGeneratedColumn('uuid')
-    customerID?: string; // | UUIDValueObject;
+    customerID?: string; 
 
     @Column()
-    customerName?: string; // | FullnameValueObject;
+    customerName?: string;
 
     @Column()
-    customerEmail?: string; // | EmailValueObject;
+    customerEmail?: string;
 
     @Column()
-    customerPhone?: string; // | PhoneValueObject;
+    customerPhone?: string;
 
     @Column()
-    createdAt?: number;// | Date;
+    createdAt?: number;
 
     @Column()    
-    deletedAt?: number; //| Date;
+    deletedAt?: number;
 
     @Column()
-    updatedAt?: number; // | Date;
+    updatedAt?: number;
 
     
 }

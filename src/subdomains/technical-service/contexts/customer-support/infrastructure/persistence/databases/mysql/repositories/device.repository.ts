@@ -96,6 +96,8 @@ export class DeviceRepository
 
         result.deletedAt = Date.now();
 
+        this.repository.save(result);
+        
         return true;
     }
 

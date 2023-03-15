@@ -1,4 +1,3 @@
-import { NoteValueObject, RoleValueObject, UUIDValueObject } from "../../../../../domain/value-objects";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { RoleDomainEntityBase } from '../../../../../domain/entities/employee/role.domain-entity/role.domain-entity';
 
@@ -6,11 +5,11 @@ import { RoleDomainEntityBase } from '../../../../../domain/entities/employee/ro
 export class RoleMySqlEntity extends RoleDomainEntityBase{
 
     @PrimaryGeneratedColumn('uuid')
-    roleID?: string ;//| UUIDValueObject;
+    roleID?: string;
 
     @Column()
-    roleName?: string ;//| RoleValueObject;
+    roleName?: string;
 
     @Column()
-    roleDescription?: string ;// | NoteValueObject;
+    roleDescription?: string;
 }

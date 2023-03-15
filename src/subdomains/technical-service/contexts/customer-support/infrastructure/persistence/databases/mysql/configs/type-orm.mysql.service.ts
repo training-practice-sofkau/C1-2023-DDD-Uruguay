@@ -1,15 +1,17 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { CustomerMySqlEntity } from '../entities/customer.entity';
-import { DeviceMySqlEntity } from '../entities/device.entity';
-import { EmployeeMySqlEntity } from '../entities/employee.entity';
-import { InvoiceMySqlEntity } from '../entities/invoice.entity';
-import { RoleMySqlEntity } from '../entities/role.entity';
-import { RepairsMySqlEntity } from '../entities/repairs.entity';
-import { SupportTicketMySqlEntity } from '../entities/support-ticket.entity';
-import { WarrantyMySqlEntity } from '../entities/warranty.entity';
-
+import { 
+    DeviceMySqlEntity, 
+    CustomerMySqlEntity,
+    EventMySqlEntity,
+    WarrantyMySqlEntity,
+    SupportTicketMySqlEntity,
+    RepairsMySqlEntity,
+    RoleMySqlEntity,
+    InvoiceMySqlEntity,
+    EmployeeMySqlEntity
+} from '../entities';
 
 @Injectable()
 export class TypeOrmMySqlConfigService implements TypeOrmOptionsFactory {
@@ -32,10 +34,10 @@ export class TypeOrmMySqlConfigService implements TypeOrmOptionsFactory {
                 RoleMySqlEntity,
                 RepairsMySqlEntity,
                 SupportTicketMySqlEntity,
-                WarrantyMySqlEntity
+                WarrantyMySqlEntity,
+                EventMySqlEntity
             ],
             synchronize: true,
         }
     }
 }
-//__dirname+'/../**/*.entity{.ts,.js}'], //

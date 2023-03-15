@@ -1,11 +1,6 @@
-import { UUIDValueObject, DateValueObject } from "../../../value-objects/common";
-
-
 export interface IOpenNewTicketCommand{
-
     ticketID: string;
-    openDate: Date;
+    openDate: number;
     deviceID: string; 
-    employeeID: string; 
-    
+    employeeID: string;     
 }

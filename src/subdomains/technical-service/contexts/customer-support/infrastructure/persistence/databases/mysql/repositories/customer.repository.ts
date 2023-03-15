@@ -101,6 +101,8 @@ export class CustomerRepository
 
         result.deletedAt = Date.now();
 
+        this.repository.save(result);
+
         return true;
     }
 

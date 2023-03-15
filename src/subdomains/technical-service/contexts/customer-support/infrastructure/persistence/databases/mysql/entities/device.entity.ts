@@ -1,21 +1,17 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { DeviceDomainEntityBase } from '../../../../../domain/entities/support-ticket/';
-import { UUIDValueObject } from '../../../../../domain/value-objects/common/uuid/uuid.value-object';
-import { DeviceTypeValueObject } from '../../../../../domain/value-objects/device/device-type.value-object';
-import { IssueValueObject } from '../../../../../domain/value-objects/device/issue.value-object';
-
 
 @Entity('device')
 export class DeviceMySqlEntity extends DeviceDomainEntityBase{
 
     @PrimaryGeneratedColumn('uuid')
-    deviceID?: string; // | UUIDValueObject;
+    deviceID?: string;
 
     @Column()
-    deviceType?: string; // | DeviceTypeValueObject;
+    deviceType?: string;
 
     @Column()
-    issues?: string; // | IssueValueObject[];
+    issues?: string;
 
 
 }

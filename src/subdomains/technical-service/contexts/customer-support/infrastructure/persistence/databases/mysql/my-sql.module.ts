@@ -12,7 +12,8 @@ import {
     WarrantyRepository,
     EmployeeRepository, 
     DeviceRepository, 
-    CustomerRepository 
+    CustomerRepository, 
+    EventRepository
 } from './repositories/';
 
 import { 
@@ -23,7 +24,8 @@ import {
     EmployeeMySqlEntity,
     WarrantyMySqlEntity,
     RoleMySqlEntity,
-    SupportTicketMySqlEntity
+    SupportTicketMySqlEntity, 
+    EventMySqlEntity,
 } from './entities/';
 
 import { 
@@ -34,7 +36,8 @@ import {
     RepairsMySqlService,
     RoleMySqlService,
     SupportTicketMySqlService,
-    WarrantyMySqlService
+    WarrantyMySqlService,
+    EventMySqlService,
 } from './services/';
 
 @Module({
@@ -51,7 +54,9 @@ import {
             RepairsMySqlEntity,
             RoleMySqlEntity,
             SupportTicketMySqlEntity,
-            WarrantyMySqlEntity
+            WarrantyMySqlEntity,
+            EventMySqlEntity
+
         ]),
     ],
     controllers:[
@@ -67,6 +72,7 @@ import {
         RoleMySqlService,
         SupportTicketMySqlService,
         WarrantyMySqlService,
+        EventMySqlService,
 
         CustomerRepository,
         DeviceRepository,
@@ -75,7 +81,9 @@ import {
         RepairsRepository,
         RoleRepository,
         SupportTicketRepository,
-        WarrantyRepository
+        WarrantyRepository,
+        EventRepository
+
     ],
     exports:[
         CustomerMySqlService,
@@ -86,6 +94,7 @@ import {
         RoleMySqlService,
         SupportTicketMySqlService,
         WarrantyMySqlService,
+        EventMySqlService,
 
         CustomerRepository,
         DeviceRepository,
@@ -94,7 +103,8 @@ import {
         RepairsRepository,
         RoleRepository,
         SupportTicketRepository,
-        WarrantyRepository
+        WarrantyRepository,
+        EventRepository
     ],
 })
 export class MySqlModule {}

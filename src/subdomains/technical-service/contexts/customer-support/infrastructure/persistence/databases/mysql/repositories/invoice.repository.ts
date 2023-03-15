@@ -94,6 +94,8 @@ export class InvoiceRepository implements IRepository<InvoiceMySqlEntity>{
 
         result.deletedAt = Date.now();
 
+        this.repository.save(result);
+
         return true;
     }
 

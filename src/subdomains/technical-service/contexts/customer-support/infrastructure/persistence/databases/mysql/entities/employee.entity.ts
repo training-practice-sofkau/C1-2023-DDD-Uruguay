@@ -1,23 +1,22 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { EmployeeDomainEntityBase } from '../../../../../domain/entities/employee/employee.domain-entity';
-import { TrueFalseValueObject, EmailValueObject, FullnameValueObject, UUIDValueObject } from '../../../../../domain/value-objects';
 
 @Entity('employee')
 export class EmployeeMySqlEntity extends EmployeeDomainEntityBase{
 
     @PrimaryGeneratedColumn('uuid')
-    employeeID: string; //| UUIDValueObject;
+    employeeID: string;
 
     @Column()
-    employeeName: string; // | FullnameValueObject;
+    employeeName: string; 
     
     @Column()
-    employeeEmail: string; // | EmailValueObject;
+    employeeEmail: string;
 
     @Column()
-    employeeRoleId: string; // | UUIDValueObject;
+    employeeRoleId: string;
 
     @Column({default: true})
-    employeeIsActive: boolean ; //| TrueFalseValueObject;
+    employeeIsActive: boolean;
 
 }

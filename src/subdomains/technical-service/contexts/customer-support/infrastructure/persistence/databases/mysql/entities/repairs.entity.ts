@@ -1,4 +1,3 @@
-import { DateValueObject, RepairValueObject, TrueFalseValueObject, UUIDValueObject } from "src/subdomains/technical-service/contexts/customer-support/domain/value-objects";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { RepairsDomainEntityBase } from '../../../../../domain/entities/support-ticket/repairs.domain-entity/repairs.domain-entity';
 
@@ -6,15 +5,15 @@ import { RepairsDomainEntityBase } from '../../../../../domain/entities/support-
 export class RepairsMySqlEntity extends RepairsDomainEntityBase{
 
     @PrimaryGeneratedColumn('uuid')
-    repairID?: string; // | UUIDValueObject;
+    repairID?: string;
 
     @Column()
-    repairDate?: number; // | Date | DateValueObject;
+    repairDate?: number;
 
     @Column()
-    repairs?: string ; //| RepairValueObject[];
+    repairs?: string;
 
     @Column({default:false})
-    workFinished?: boolean ; // | TrueFalseValueObject;
+    workFinished?: boolean;
 
 }

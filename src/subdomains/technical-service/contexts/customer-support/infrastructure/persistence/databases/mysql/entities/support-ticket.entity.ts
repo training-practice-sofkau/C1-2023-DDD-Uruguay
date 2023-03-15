@@ -1,4 +1,3 @@
-import { DateValueObject, TrueFalseValueObject, UUIDValueObject } from "../../../../../domain/value-objects";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { SupportTicketDomainEntityBase } from '../../../../../domain/entities/support-ticket/service-ticket.domain-entity';
 
@@ -6,23 +5,23 @@ import { SupportTicketDomainEntityBase } from '../../../../../domain/entities/su
 export class SupportTicketMySqlEntity extends SupportTicketDomainEntityBase{
 
     @PrimaryGeneratedColumn('uuid')
-    ticketID?:  string ; //| UUIDValueObject;
+    ticketID?:  string;
 
     @Column()
-    dateOpen?: number ; //| Date | DateValueObject;
+    dateOpen?: number;
 
     @Column()
-    deviceID?:  string; // | UUIDValueObject;
+    deviceID?:  string;
 
     @Column()
-    repairsID?:  string ; //| UUIDValueObject;
+    repairsID?:  string;
 
     @Column()
-    employeeID?:  string ; //| UUIDValueObject;
+    employeeID?:  string;
 
     @Column({default:true})
-    isOpen?: boolean ;//| TrueFalseValueObject;
+    isOpen?: boolean;
 
     @Column()
-    dateClose?: number; // | Date | DateValueObject;
+    dateClose?: number;
 }

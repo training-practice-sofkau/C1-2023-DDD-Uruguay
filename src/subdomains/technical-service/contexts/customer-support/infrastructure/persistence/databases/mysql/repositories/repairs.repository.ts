@@ -98,6 +98,8 @@ export class RepairsRepository implements IRepository<RepairsMySqlEntity>{
 
         result.deletedAt = Date.now();
 
+        this.repository.save(result);
+
         return true;
     }
        

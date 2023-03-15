@@ -97,6 +97,8 @@ export class SupportTicketRepository implements IRepository<SupportTicketMySqlEn
 
         result.deletedAt = Date.now();
 
+        this.repository.save(result);
+
         return true;
     }
     

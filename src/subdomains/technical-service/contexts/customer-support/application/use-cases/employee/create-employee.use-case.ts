@@ -46,7 +46,7 @@ export class CreateEmployeeUseCase <
 
         const VO = this.createValueObject(command);
 
-        this.validateValueObject(VO);
+        //this.validateValueObject(VO);
 
         const entity = this.createEntityEmployeeDomain(VO);
 

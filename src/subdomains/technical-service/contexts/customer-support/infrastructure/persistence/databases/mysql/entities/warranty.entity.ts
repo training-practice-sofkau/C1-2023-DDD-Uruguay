@@ -1,19 +1,18 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { WarrantyDomainEntityBase } from '../../../../../domain/entities/invoice/warranty.domain-entity/warranty.domain-entity';
-import { ItemValueObject, WarrantyStatusValueObject, DateValueObject, UUIDValueObject } from '../../../../../domain/value-objects';
 
 @Entity('warranty')
 export class WarrantyMySqlEntity extends WarrantyDomainEntityBase{
 
     @PrimaryGeneratedColumn('uuid')
-    warrantyID?: string ; //| UUIDValueObject;
+    warrantyID?: string;
 
     @Column()
-    startDate?: number; // | Date | DateValueObject;
+    startDate?: number; 
 
     @Column()
-    warrantyStatus?: string ;//| WarrantyStatusValueObject;
+    warrantyStatus?: string;
 
     @Column()
-    endDate?: number; // | Date | DateValueObject;
+    endDate?: number;
 }

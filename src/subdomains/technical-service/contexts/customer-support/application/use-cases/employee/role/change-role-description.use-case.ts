@@ -3,12 +3,13 @@ import { ValueObjectErrorHandler, IUseCase, ValueObjectException } from '@sofka'
 import { IRoleDescriptionChangedResponse, IChangeRoleDescriptionCommand } from '../../../../domain/interfaces/';
 
 import { EmployeeAggregate } from '../../../../domain/aggregates/employee/employee.aggregate';
-import { IEmployeeDomainService } from '../../../../domain/services/employee/employee.domain-service';
-import { EmployeeStatusChangedEventPublisherBase } from '../../../../domain/events/publishers/employee/employee-status-changed.event-publisher';
 import { NoteValueObject, RoleValueObject, UUIDValueObject } from '../../../../domain/value-objects/';
 
 import { IRoleDomainEntity } from '../../../../domain/entities/interfaces/employee/role.domain-entity.interface';
 import { RoleDomainEntityBase } from '../../../../domain/entities/employee/role.domain-entity/role.domain-entity';
+
+import { RoleDescriptionChangedEventPublisherBase } from '../../../../domain/events/publishers/employee/role/role-description-changed.event-publisher';
+import { IRoleDomainService } from '../../../../domain/services';
 
 
 
@@ -20,13 +21,13 @@ export class ChangeRoleDescriptionUseCase<
     private readonly employeeAggregateRoot: EmployeeAggregate;
 
     constructor(
-        private readonly employeeService: IEmployeeDomainService,
-        private readonly employeeStatusChangedEventPublisherBase: EmployeeStatusChangedEventPublisherBase
+        private readonly roleService: IRoleDomainService,
+        private readonly roleDescriptionChangedEventPublisherBase: RoleDescriptionChangedEventPublisherBase
     ) {
         super();
         this.employeeAggregateRoot = new EmployeeAggregate({
-            employeeService,
-            employeeStatusChangedEventPublisherBase
+            roleService,
+            roleDescriptionChangedEventPublisherBase
         })
 
     }

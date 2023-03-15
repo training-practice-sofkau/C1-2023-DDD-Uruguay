@@ -1,10 +1,5 @@
-import { DateValueObject, TrueFalseValueObject, UUIDValueObject } from "../../../value-objects/common";
-import { AmountValueObject } from "../../../value-objects/invoice";
-import { WarrantyStatusValueObject } from "../../../value-objects/warranty";
-
 export interface ICreateInvoiceCommand{
-
-    dateEmitted?: Date;
+    dateEmitted?: number;
     ticketID?: string;
     customerID?: string;
     invoiceAmount?: number;

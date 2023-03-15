@@ -1,6 +1,7 @@
 export * from './customer.entity';
 export * from './device.entity';
 export * from './employee.entity';
+export * from './event.entity';
 export * from './invoice.entity';
 export * from './repairs.entity';
 export * from './role.entity';

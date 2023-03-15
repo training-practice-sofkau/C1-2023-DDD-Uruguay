@@ -94,6 +94,8 @@ export class RoleRepository implements IRepository<RoleMySqlEntity>{
 
         result.deletedAt = Date.now();
 
+        this.repository.save(result);
+        
         return true;
     }    
     

@@ -11,14 +11,6 @@ import {
     RepairsDomainEntityBase 
 } from '../../entities/support-ticket/';
 
-import {    
-    
-    IGenerateInvoiceCommand,
-    IAddIssueCommand,
-    IRemoveIssueCommand,    
-
-} from '../../interfaces';
-
 import {
     ISupportTicketDomainService,
     IDeviceDomainService,

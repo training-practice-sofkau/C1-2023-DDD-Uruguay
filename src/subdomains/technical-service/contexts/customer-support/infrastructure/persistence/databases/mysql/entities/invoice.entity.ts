@@ -1,38 +1,36 @@
-
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { InvoiceDomainEntityBase } from '../../../../../domain/entities/invoice/';
-import { AmountValueObject, TrueFalseValueObject, DateValueObject, UUIDValueObject } from '../../../../../domain/value-objects';
 
 @Entity('invoice')
 export class InvoiceMySqlEntity extends InvoiceDomainEntityBase {
 
     @PrimaryGeneratedColumn('uuid')
-    invoiceID?: string; //| UUIDValueObject;
+    invoiceID?: string;
 
     @Column()
-    dateEmitted?:number; // | Date | DateValueObject;
+    dateEmitted?:number;
 
     @Column()
-    ticketID?: string ;//| UUIDValueObject;
+    ticketID?: string;
 
     @Column()
-    customerID?: string; //| UUIDValueObject;
+    customerID?: string;
 
     @Column()
-    invoiceAmount?: number;// | AmountValueObject;
+    invoiceAmount?: number;
 
     @Column()
-    warrantyID?: string;// | UUIDValueObject;
+    warrantyID?: string;
 
     @Column({default: false})
-    isPaid?: boolean ;//| TrueFalseValueObject;
+    isPaid?: boolean;
 
     @Column()
-    createdAt?: number; // | Date;
+    createdAt?: number;
 
     @Column()
-    updatedAt?: number; // | Date;    
+    updatedAt?: number;
 
     @Column()
-    deletedAt?: number; // | Date;
+    deletedAt?: number;
 }
