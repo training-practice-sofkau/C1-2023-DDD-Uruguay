@@ -4,8 +4,6 @@ import {
     ICounterCreatePosterCommand,
     ICounterCreateProductCommand,
     ICounterDomainService,
-    PosterDomainEntity,
-    ProductDomainEntity
 } from "src/subdomains/store/contexts/sells/domain";
 import { PosterMySqlEntity, ProductMySqlEntity } from '../entities';
 import { CounterMySqlEntity } from "../entities/counter.entity";

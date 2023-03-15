@@ -5,7 +5,7 @@ export abstract class GettedProductEventPublisherBase<Response = ProductDomainEn
     extends EventPublisherBase<Response> {
     publish<Result = any>(): Promise<Result> {
         return this.emit(
-            'store.counter-created',
+            'store.getted-product',
             JSON.stringify({ data: this.response })
         )
     }

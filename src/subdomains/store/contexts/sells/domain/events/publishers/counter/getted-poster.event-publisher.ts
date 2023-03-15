@@ -5,7 +5,7 @@ export abstract class GettedPosterEventPublisherBase<Response = PosterDomainEnti
     extends EventPublisherBase<Response> {
     publish<Result = any>(): Promise<Result> {
         return this.emit(
-            'store.counter-created',
+            'store.getted-poster',
             JSON.stringify({ data: this.response })
         )
     }

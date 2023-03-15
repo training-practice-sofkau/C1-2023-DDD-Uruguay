@@ -11,6 +11,8 @@ import { UpdatedTypePublisher } from "./publisher/counter/poster/updated-type.me
 import { UpdatedExpirationPublisher } from "./publisher/counter/product/updated-expiration.message-publisher";
 import { UpdatedStockPublisher } from "./publisher/counter/product/updated-stock.message-publisher";
 import { CounterController } from "./subscriber/counter-created.subscriber";
+import { ProductController } from '../controllers/product.controller';
+import { PosterController } from "../controllers/poster.controller";
 
 /**
  * name: el nombre del cliente.
@@ -47,7 +49,11 @@ import { CounterController } from "./subscriber/counter-created.subscriber";
             },
         ]),
     ],
-    controllers: [CounterController],
+    controllers: [
+        CounterController,
+        PosterController,
+        ProductController
+    ],
     providers: [
         CreatedCounterPublisher,
         CreatedPosterPublisher,

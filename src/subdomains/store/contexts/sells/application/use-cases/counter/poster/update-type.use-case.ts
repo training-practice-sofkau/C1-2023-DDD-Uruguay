@@ -3,7 +3,6 @@ import { CounterAggregate, IPosterDomainService, PosterDomainEntity, IPosterDoma
 import { PosterUpdatedTypeEventPublisherBase } from "../../../../domain/events/publishers/counter/poster/updated-type.event-publisher";
 import { IPosterUpdateTypeCommand } from "../../../../domain/interfaces/commands/counter/poster/update-type.command";
 import { IPosterUpdatedTypeResponse } from "../../../../domain/interfaces/responses/counter/poster/updated-type.response";
-import { ImgType } from '../../../../domain/value-objects/poster/type/type.value-object';
 
 export class UpdateTypePosterUseCase<
     Command extends IPosterUpdateTypeCommand = IPosterUpdateTypeCommand,
