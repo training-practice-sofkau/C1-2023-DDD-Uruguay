@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule } from '@nestjs/microservices';
 import { Transport } from '@nestjs/microservices/enums';
-import { CreatedClientPublisher } from './publisher/created-client.publisher';
-import { CreateOrderPublisher } from './publisher/created-order.publisher';
-import { CreatedClientController } from './subscribers/globalEvent.subscriber';
+import { MembershipController } from '../controllers/membership.controller';
+import { CompraController } from '../controllers/compra.controller';
+
+
+
+
 
 /**
  * name: el nombre del cliente.
@@ -29,7 +32,7 @@ import { CreatedClientController } from './subscribers/globalEvent.subscriber';
     imports: [
         ClientsModule.register([
             {
-                name: 'CONSULTORY_CONTEXT',
+                name: 'VENTAS_WEB_CONTEXT',
                 transport: Transport.KAFKA,
                 options: {
                     client: {
@@ -40,8 +43,27 @@ import { CreatedClientController } from './subscribers/globalEvent.subscriber';
             },
         ]),
     ],
-    controllers: [CreatedClientController],
-    providers: [CreatedClientPublisher, CreateOrderPublisher],
-    exports: [CreatedClientPublisher, CreateOrderPublisher]
+    controllers: [MembershipController, CompraController],
+    providers: [
+        //CompraCreadaPublisher,
+       // ClienteCreadoPublisher,
+       // UpdatePhonePublisher,
+       // ClienteConseguidoPublisher,
+        //CursoCreadoPublisher,
+        //UpdateCostoCursoPublisher,
+        //CursoConseguidoPublisher
+    ],
+
+    exports: [
+        /*
+        CompraCreadaEventPublisher,
+        CreateClientePublisher,
+        UpdatePhoneEventPublisher,
+        ClienteConseguidoEventPublisher,
+        CursoCreadoEventPublisher,
+        UpdateCostoCursoEventPublisher,
+        CursoConseguidoEventPublisher
+    */
+   ]
 })
 export class MessagingModule { }

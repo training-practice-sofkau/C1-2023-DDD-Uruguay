@@ -1,7 +1,7 @@
 import { IUseCase, ValueObjectErrorHandler } from "src/libs";
 import { IObtenerCursoMethod } from "../../../domain/interfaces/commands/compra/curso/obtenerCurso.command";
 import { ICursoConseguidoResponse } from "../../../domain/interfaces/responses/compra/cursoConseguido.response";
-import { CompraAggregate, CursoDomainEntity, ICompraService } from "../../../domain";
+import { CompraAggregate, CursoDomainEntity, ICompraService, ICursoService } from "../../../domain";
 import { CursoConseguidoEventPublisher } from "../../../domain/events/publishers/compra/curso/curso-conseguido.event-publisher";
 
 
@@ -18,9 +18,11 @@ implements IUseCase<Command, Response>{ //IMPLEMENTO LA INTERFAZ PARA EJECUTAR E
 private readonly compraAggregate: CompraAggregate;
 
 //INYECTO EL SERVICIO Y EL EVENTO NECESARIO
-constructor(private readonly compraService: ICompraService, private readonly cursoConseguidoEventPublisher: CursoConseguidoEventPublisher) {
+constructor(
+    private readonly cursoService: ICursoService,
+    private readonly cursoConseguidoEventPublisher: CursoConseguidoEventPublisher) {
     super();
-    this.compraAggregate = new CompraAggregate({ compraService, cursoConseguidoEventPublisher })
+    this.compraAggregate = new CompraAggregate({ cursoService, cursoConseguidoEventPublisher })
 }
 
  /*

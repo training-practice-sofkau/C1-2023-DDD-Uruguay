@@ -2,7 +2,7 @@ import { IsString } from "class-validator/types/decorator/decorators";
 import { ICreatePlaneMethod } from "../../../../domain/interfaces/commands/membership";
 
 
-export class ICreatePlaneCommand implements ICreatePlaneMethod{
+export class ICreatePlanCommand implements ICreatePlaneMethod{
 
     
     @IsString()

@@ -5,10 +5,10 @@ import { UuidValueObject } from "../../value-objects/common-value-objects/uuid/u
 
 export interface IPlanDomainEntityInterface {
 
-    idPlan : string | UuidValueObject;
-    nombrePlan : string | FullnameValueObject;
-    dateInicioPlan : number | DateValueObject;
-    dateFinPlan : number | DateValueObject;
-    costoPlan : number | CostoValueObject;
+    idPlan? : string | UuidValueObject;
+    nombrePlan? : string | FullnameValueObject;
+    dateInicioPlan? : number | DateValueObject;
+    dateFinPlan? : number | DateValueObject;
+    costoPlan? : number | CostoValueObject;
     
 }

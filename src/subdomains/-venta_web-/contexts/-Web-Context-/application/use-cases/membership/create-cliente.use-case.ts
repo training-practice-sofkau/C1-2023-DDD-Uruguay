@@ -1,7 +1,7 @@
 import { IUseCase, ValueObjectErrorHandler, ValueObjectException } from "src/libs";
 import { ICreateClienteMethod } from "../../../domain/interfaces/commands";
 import { IClienteCreadoResponse } from "../../../domain/interfaces/responses";
-import { ClienteCreadoEventPublisher, ClienteDomainEntity, IClienteDomainEntityInterface, IMembershipService, MembershipAggregate } from "../../../domain";
+import { ClienteCreadoEventPublisher, ClienteDomainEntity, IClienteDomainEntityInterface, IClienteService, IMembershipService, MembershipAggregate } from "../../../domain";
 import { FullnameValueObject } from "../../../domain/value-objects/common-value-objects/fullname";
 import { PhoneValueObject } from "../../../domain/value-objects/cliente/phone/phone.value-object";
 import { EmailValueObject } from "../../../domain/value-objects/cliente/email/email.value-object";
@@ -19,10 +19,11 @@ export class CreateClienteUseCase<
     private readonly membershipAggregate: MembershipAggregate
 
     //INYECTO EL SERVICIO Y EL EVENTO NECESARIO
-    constructor(private readonly membershipService: IMembershipService,
+    constructor(
+        private readonly clienteService: IClienteService,
         private readonly clienteCreadoEventPublisher: ClienteCreadoEventPublisher) {
         super();
-        this.membershipAggregate = new MembershipAggregate({ membershipService, clienteCreadoEventPublisher })
+        this.membershipAggregate = new MembershipAggregate({ clienteService, clienteCreadoEventPublisher })
     }
 
     /*

@@ -1,5 +1,5 @@
 import { IUseCase, ValueObjectErrorHandler, ValueObjectException } from "src/libs";
-import { ClienteDomainEntity, IClienteDomainEntityInterface, IClientephoneActualizadoResponse, IMembershipService, IUpdatePhoneMethod, MembershipAggregate, PhoneValueObject, UpdatePhoneEventPublisher } from "../../../domain";
+import { ClienteDomainEntity, IClienteDomainEntityInterface, IClienteService, IClientephoneActualizadoResponse, IMembershipService, IUpdatePhoneMethod, MembershipAggregate, PhoneValueObject, UpdatePhoneEventPublisher } from "../../../domain";
 
 export class UpdateClientPhoneUseCase <
 
@@ -14,10 +14,11 @@ implements IUseCase<Command, Response>{ //IMPLEMENTO LA INTERFAZ PARA EJECUTAR E
 private readonly membershipAggregate: MembershipAggregate
 
 //INYECTO EL SERVICIO Y EL EVENTO NECESARIO
-constructor(private readonly membershipService: IMembershipService,
-    private readonly clienteCreadoEventPublisher: UpdatePhoneEventPublisher) {
+constructor(
+    private readonly clienteService: IClienteService,
+    private readonly updatePhoneEventPublisher: UpdatePhoneEventPublisher) {
     super();
-    this.membershipAggregate = new MembershipAggregate({ membershipService, clienteCreadoEventPublisher })
+    this.membershipAggregate = new MembershipAggregate({ clienteService, updatePhoneEventPublisher })
 }
 
 /*

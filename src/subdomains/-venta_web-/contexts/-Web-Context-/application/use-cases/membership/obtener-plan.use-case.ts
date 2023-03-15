@@ -17,7 +17,9 @@ export class ObtenerPlanUseCase<
     private readonly membershipAggregate: MembershipAggregate;
 
     //INYECTO EL SERVICIO Y EL EVENTO NECESARIO
-    constructor(private readonly membershipService: IMembershipService, private readonly planConseguidoEventPublisher: PlanConseguidoEventPublisher) {
+    constructor(
+        private readonly membershipService: IMembershipService,
+        private readonly planConseguidoEventPublisher: PlanConseguidoEventPublisher) {
         super();
         this.membershipAggregate = new MembershipAggregate({ membershipService, planConseguidoEventPublisher })
     }

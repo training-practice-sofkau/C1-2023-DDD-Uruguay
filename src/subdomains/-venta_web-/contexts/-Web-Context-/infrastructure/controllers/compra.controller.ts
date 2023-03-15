@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { CreateClienteCommand } from '../utils/commands/createCliente.command';
-import { CreateClienteUseCase, CreateCompraUseCase, CreateCursoUseCase, UpdateClientPhoneUseCase, UpdateCursoCostoUseCase } from '../../application/use-cases/compra';
+import { CreateClienteUseCase, CreateCompraUseCase, CreateCursoUseCase, ObtenerClienteUseCase, ObtenerCursoUseCase, UpdateClientPhoneUseCase, UpdateCursoCostoUseCase } from '../../application/use-cases/compra';
 import { ClienteCreadoEventPublisher } from '../../domain/events/publishers/compra/cliente-creado.event-publisher';
 import { ICompraService } from '../../domain/services/compra.service';
 import { ICreateCompraCommand } from '../utils/commands/compra/createCompra.command';
@@ -13,6 +13,10 @@ import { IUpdatePhoneCommand } from '../utils/commands/updatePhone.command';
 import { UpdatePhoneEventPublisher } from '../../domain/events/publishers/compra/cliente/update-phone.event-publisher';
 import { IUpdateCostoCommand } from '../utils/commands/compra/curso/updateCosto.command';
 import { UpdateCostoCursoEventPublisher } from '../../domain/events/publishers/compra/curso/update-costo.event-publisher';
+import { CursoConseguidoEventPublisher } from '../../domain/events/publishers/compra/curso/curso-conseguido.event-publisher';
+import { IObtenerCursoCommand } from '../utils/commands/compra/curso/obtenerCurso.command';
+import { IObtenerClienteCommand } from '../utils/commands/ObtenerCliente.command';
+import { ClienteConseguidoEventPublisher } from '../../domain/events/publishers/compra/cliente/cliente-conseguido.event-publisher';
 
 @Controller('compra')
 export class CompraController {
@@ -25,11 +29,12 @@ export class CompraController {
         private readonly clienteService: IClienteService,
         private readonly clienteCreadoEventPublisher: ClienteCreadoEventPublisher,
         private readonly updatePhoneEventPublisher: UpdatePhoneEventPublisher,
+        private readonly clienteConseguidoEventPublisher: ClienteConseguidoEventPublisher,
 
         private readonly cursoService: ICursoService,
         private readonly cursoCreadoEventPublisher: CursoCreadoEventPublisher,
-        private readonly updateCostoCursoEventPublisher: UpdateCostoCursoEventPublisher
-
+        private readonly updateCostoCursoEventPublisher: UpdateCostoCursoEventPublisher,
+        private readonly cursoConseguidoEventPublisher: CursoConseguidoEventPublisher
 
         
     ) {}
@@ -75,6 +80,7 @@ export class CompraController {
         return await useCase.execute(command);
     }
 
+
     @Post('/update-costo-curso')
     async updateCostoCurso(@Body() command: IUpdateCostoCommand ) {
         const useCase = new UpdateCursoCostoUseCase(
@@ -84,6 +90,32 @@ export class CompraController {
         return await useCase.execute(command);
     }
 
+    //OBTENER
+
+    @Post('/obtener-curso')
+    async obtenerCurso(@Body() command: IObtenerCursoCommand ) {
+        const useCase = new ObtenerCursoUseCase(
+            this.cursoService,
+            this.cursoConseguidoEventPublisher,
+        );
+        return await useCase.execute(command);
+    }
+
+    
+    @Post('/obtener-cliente')
+    async obtenerCliente(@Body() command: IObtenerClienteCommand ) {
+        const useCase = new  ObtenerClienteUseCase(
+            this.clienteService,
+            this.clienteConseguidoEventPublisher,
+        );
+        return await useCase.execute(command);
+    }
+    
+    /*
+    CREAR CUPON
+    UPDATE PORCENTAJE CUPON
+    OBTENER CUPON
+    */
 }
   
 

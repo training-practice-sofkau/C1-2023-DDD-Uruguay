@@ -24,6 +24,9 @@ import { ClienteMySqlEntity, CursoMySqlEntity, PlanMySqlEntity, CuponMySqlEntity
         ])
     ],
     providers: [
+
+        TypeOrmMySqlConfigService,
+
         ClienteMySqlService,
         ClienteRepository,
 
@@ -44,6 +47,9 @@ import { ClienteMySqlEntity, CursoMySqlEntity, PlanMySqlEntity, CuponMySqlEntity
 
     ],
     exports: [
+
+        TypeOrmMySqlConfigService,
+
         ClienteMySqlService,
         ClienteRepository,
 

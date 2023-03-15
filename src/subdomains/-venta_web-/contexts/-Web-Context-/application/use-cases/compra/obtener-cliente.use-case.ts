@@ -1,7 +1,7 @@
 import { IUseCase, ValueObjectErrorHandler } from "src/libs";
 import { IObtenerClienteMethod } from "../../../domain/interfaces/commands/compra/cliente/ObtenerCliente.command";
 import { IClienteConseguidoResponse } from "../../../domain/interfaces/responses/clienteConseguido.response";
-import { ClienteDomainEntity, CompraAggregate, ICompraService } from "../../../domain";
+import { ClienteDomainEntity, CompraAggregate, IClienteService, ICompraService } from "../../../domain";
 import { ClienteConseguidoEventPublisher } from "../../../domain/events/publishers/compra/cliente/cliente-conseguido.event-publisher";
 
 
@@ -21,9 +21,11 @@ export class ObtenerClienteUseCase<
     ESTAS DEPENDENCIAS SE UTILIZAN PARA CREAR UN AGREGADO COMPRA, QUE SE UTILIZA PARA REALIZAR
     LA LOGICA DE ESTE CASO DE USO.
     */
-    constructor(private readonly compraService: ICompraService, private readonly clienteConseguidoEventPublisher: ClienteConseguidoEventPublisher) {
+    constructor(
+        private readonly clienteService: IClienteService,
+        private readonly clienteConseguidoEventPublisher: ClienteConseguidoEventPublisher) {
         super();
-        this.compraAggregate = new CompraAggregate({ compraService, clienteConseguidoEventPublisher })
+        this.compraAggregate = new CompraAggregate({ clienteService, clienteConseguidoEventPublisher })
     }
 
     /*

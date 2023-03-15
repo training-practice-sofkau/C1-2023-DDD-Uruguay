@@ -23,7 +23,9 @@ export class CreateMembershipUseCase<
 
 
     //INYECTO EL SERVICIO Y EL EVENTO NECESARIO
-    constructor(private readonly membershipService: IMembershipService, private readonly membershipCreadaEventPublisher: MembershipCreadaEventPublisher) {
+    constructor(
+        private readonly membershipService: IMembershipService,
+        private readonly membershipCreadaEventPublisher: MembershipCreadaEventPublisher) {
         super();
         this.membershipAggregate = new MembershipAggregate({ membershipService, membershipCreadaEventPublisher })
     }

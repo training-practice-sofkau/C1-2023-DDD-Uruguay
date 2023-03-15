@@ -5,7 +5,7 @@ import { ClienteDomainEntity, PlanDomainEntity } from "../entities";
 import { MembershipDomainEntity } from "../entities/membership/membership.domain-entity";
 import { ICreateClienteMethod } from "../interfaces/commands/compra/createCliente.command";
 import { ICreateMembershipMethod } from "../interfaces/commands/membership/createMembership.command";
-import { ICreatePlaneMethod } from "../interfaces/commands/membership/createPlan.command";
+import { ICreatePlanMethod } from "../interfaces/commands/membership/createPlan.command";
 import { IClienteService } from "../services/cliente.service";
 import { IMembershipService} from "../services/membership.service";
 import { IPlanService } from "../services/plan.service";
@@ -104,7 +104,7 @@ export class MembershipAggregate implements IClienteService, IPlanService, IMemb
 
     async createCliente(cliente: ICreateClienteMethod): Promise<ClienteDomainEntity> {
         if (this.membershipService && this.clienteCreadoEventPublisher) {
-            const result = await this.membershipService.createCliente(cliente);
+            const result = await this.clienteService.createCliente(cliente);
             this.clienteCreadoEventPublisher.response = result;
             this.clienteCreadoEventPublisher.publish();
             return this.clienteCreadoEventPublisher.response;
@@ -114,9 +114,9 @@ export class MembershipAggregate implements IClienteService, IPlanService, IMemb
           );
     }
 
-    async createPlan(plan: ICreatePlaneMethod): Promise<PlanDomainEntity> {
+    async createPlan(plan: ICreatePlanMethod): Promise<PlanDomainEntity> {
         if (this.membershipService && this.planCreadoEventPublisher) {
-            const result = await this.membershipService.createPlan(plan);
+            const result = await this.planService.createPlan(plan);
             this.planCreadoEventPublisher.response = result;
             this.planCreadoEventPublisher.publish();
             return this.planCreadoEventPublisher.response;
@@ -166,7 +166,7 @@ export class MembershipAggregate implements IClienteService, IPlanService, IMemb
     async obtenerCliente(client: string): Promise<ClienteDomainEntity> {
       
       if (this.membershipService && this.clienteConseguidoEventPublisher) {
-        const result = await this.membershipService.obtenerCliente(client);
+        const result = await this.clienteService.obtenerCliente(client);
         this.clienteConseguidoEventPublisher.response = result;
         this.clienteConseguidoEventPublisher.publish();
         return this.clienteConseguidoEventPublisher.response;
@@ -180,7 +180,7 @@ export class MembershipAggregate implements IClienteService, IPlanService, IMemb
 
     async obtenerPlan(plane: string): Promise<PlanDomainEntity> {
       if (this.membershipService && this.planConseguidoEventPublisher) {
-        const result = await this.membershipService.obtenerPlan(plane);
+        const result = await this.planService.obtenerPlan(plane);
         this.planConseguidoEventPublisher.response = result;
         this.planConseguidoEventPublisher.publish();
         return this.planConseguidoEventPublisher.response;

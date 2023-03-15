@@ -1,7 +1,8 @@
 import { ClienteDomainEntity } from "../../../entities";
 import { PlanDomainEntity } from "../../../entities/membership/plan.domain-entity";
 
-export interface IClienteCreadoResponse {
+export interface IPlanCreadoResponse {
+
     success: boolean;
-    data: ClienteDomainEntity | null;
+    data: PlanDomainEntity | null;
 }

@@ -1,6 +1,6 @@
 
 
-export interface ICreatePlaneMethod {
+export interface ICreatePlanMethod {
 
     idPlan: string;
     nombrePlan: string;
