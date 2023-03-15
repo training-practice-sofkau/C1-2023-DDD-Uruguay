@@ -2,6 +2,7 @@ export * from './check-in.entity';
 export * from './check-out.entity';
 export * from './consumption.entity';
 export * from './customer.entity';
+export * from './event.entity';
 export * from './guest.entity';
 export * from './invoice.entity';
 export * from './reserve.entity';

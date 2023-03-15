@@ -4,7 +4,6 @@ import {
     ValueObjectException
 } from "src/libs/sofka";
 import {
-    CustomerObtainedEventPublisher,
     DateValueObject,
     ICreateReserve,
     IReserveCreatedResponse,
@@ -13,8 +12,7 @@ import {
     NumberOfGuestsValueObject,
     ReserveAggregate,
     ReserveCreatedEventPublisher,
-    ReserveDomainEntity,
-    RoomObtainedEventPublisher
+    ReserveDomainEntity
 } from "../../../../domain";
 import { GetCustomerUseCase, GetRoomUseCase } from "..";
 
@@ -30,8 +28,6 @@ export class CreateReserveUseCase<
     constructor(
         private readonly reserveService: IReserveDomainService,
         private readonly reserveCreatedEventPublisher: ReserveCreatedEventPublisher,
-        private readonly customerObtainedEventPublisher: CustomerObtainedEventPublisher,
-        private readonly roomObtainedEventPublisher: RoomObtainedEventPublisher,
     ) {
         super();
         this.reserveAggregate = new ReserveAggregate({

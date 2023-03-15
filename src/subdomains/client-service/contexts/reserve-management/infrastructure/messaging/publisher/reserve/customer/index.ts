@@ -1,1 +1,1 @@
-export * from './payment-method-updated';
+export * from './payment-method-updated.message-publisher';

@@ -1,1 +1,1 @@
-export * from './access-level-updated';
+export * from './access-level-updated.message-publisher';

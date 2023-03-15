@@ -8,10 +8,8 @@ import {
     IAddRoom,
     ICreateReserve,
     IGetRoom,
-    IUpdateCustomerPaymentMethod,
     IUpdateEndDate,
     IUpdateNumberOfGuests,
-    IUpdateRoomState,
     IUpdateStartDate
 } from "../interfaces";
 

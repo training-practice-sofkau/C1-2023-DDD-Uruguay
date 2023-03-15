@@ -3,6 +3,7 @@ export * from './check-in.repository';
 export * from './check-out.repository';
 export * from './consumption.repository';
 export * from './customer.repository';
+export * from './event.repository';
 export * from './guest.repository';
 export * from './invoice.repository';
 export * from './reserve.repository';

@@ -1,1 +1,1 @@
-export * from './cost-updated';
+export * from './cost-updated.message-publisher';

@@ -1,2 +1,2 @@
-export * from './email-updated';
-export * from './phone-updated';
+export * from './email-updated.message-publisher';
+export * from './phone-updated.message-publisher';

@@ -33,8 +33,6 @@ export class CreateCheckInUseCase<
     constructor(
         private readonly checkInService: ICheckInDomainService,
         private readonly checkInCreatedEventPublisher: CheckInCreatedEventPublisher,
-        private readonly guestObtainedEventPublisher: GuestObtainedEventPublisher,
-        private readonly roomKeyObtainedEventPublisher: RoomKeyObtainedEventPublisher,
     ) {
         super();
         this.checkInAggregate = new CheckInAggregate({

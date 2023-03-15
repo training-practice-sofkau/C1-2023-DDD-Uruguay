@@ -5,8 +5,6 @@ export * from './customer';
 export * from './get-customer.command';
 export * from './get-room.command';
 export * from './room';
-export * from './update-customer-payment-method.command';
 export * from './update-end-date.command';
 export * from './update-number-of-guest.command';
-export * from './update-room-state.command';
 export * from './update-start-date.command';

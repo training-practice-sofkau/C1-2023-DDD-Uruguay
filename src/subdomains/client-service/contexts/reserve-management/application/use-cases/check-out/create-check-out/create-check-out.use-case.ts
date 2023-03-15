@@ -33,8 +33,6 @@ export class CreateCheckOutUseCase<
     constructor(
         private readonly checkOutService: ICheckOutDomainService,
         private readonly checkOutCreatedEventPublisher: CheckOutCreatedEventPublisher,
-        private readonly consumptionObtainedEventPublisher: ConsumptionObtainedEventPublisher,
-        private readonly cnvoiceObtainedEventPublisher: InvoiceObtainedEventPublisher,
     ) {
         super();
         this.checkOutAggregate = new CheckOutAggregate({

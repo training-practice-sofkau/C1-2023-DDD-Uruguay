@@ -1,1 +1,1 @@
-export * from './state-updated';
+export * from './state-updated.message-publisher';
