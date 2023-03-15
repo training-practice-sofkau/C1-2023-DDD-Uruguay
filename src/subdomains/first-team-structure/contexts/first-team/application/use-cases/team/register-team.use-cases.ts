@@ -18,7 +18,6 @@ implements IUseCase<Command, Response>
     private readonly teamAggregate: TeamAggregate;
 
     constructor(
-        private readonly getPlayers: GetPlayersUseCase<IGetPlayersCommand, IGotPlayersResponse>,
         private readonly getCoach: GetCoachUseCase<IGetCoachCommand, IGotCoachResponse>,
         private readonly teamService: ITeamDomainService,
         private readonly registeredTeamEventPublisher: RegisteredTeamEventPublisher,

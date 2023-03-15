@@ -1,5 +1,5 @@
 export interface IAddStadiumCommand {
-    stadiumId: string,
+    stadiumId?: string,
     capacity: number,
     squareMeters: number,
     name: string,

@@ -28,9 +28,7 @@ implements IUseCase<Command, Response>
     constructor(
         private readonly getTeam: GetTeamUseCase<IGetTeamCommand, IGotTeamReponse>,
         private readonly getTrainingField: GetTrainingFieldUseCase<IGetTrainingFieldCommand, IGotTrainingFieldResponse>,
-        private readonly getTrainingEquipments: GetTrainingEquipments<IGetTrainingEquipmentsCommand, IGotTrainingEquipmentsResponse>,
         private readonly getTrainer: GetTrainerUseCase<IGetTrainerCommand, IGotTrainerResponse>,
-        private readonly getWorkouts: GetWorkoutUseCase<IGetWorkoutsCommand, IGotWorkoutsResponse>,
         private readonly trainingService: ITrainingDomainService,
         private readonly registeredTrainingEventPublisher: RegisteredTrainingEventPublisher,
     ) {

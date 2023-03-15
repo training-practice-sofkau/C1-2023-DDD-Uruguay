@@ -5,7 +5,6 @@ import { ConfigService } from '@nestjs/config'
 import { CoachPostgreEntity, MatchPostgreEntity, PlayerPostgreEntity, RivalPostgreEntity, StadiumPostgreEntity, TeamPostgreEntity, TrainerPostgreEntity, TrainingPostgreEntity, TrainingEquipmentPostgreEntity, TrainingFieldPostgreEntity, WorkoutPostgreEntity } from "../entities";
 
 @Injectable()
-
 export class TypeOrmPostgresConfigService implements TypeOrmOptionsFactory {
 
     constructor(private readonly configService: ConfigService) {}

@@ -7,7 +7,7 @@ import { ClientProxy } from '@nestjs/microservices'
 
 @Injectable()
 export class AddedRivalPublisher extends AddedRivalEventPublisher {
-    constructor(@Inject('TEAM_SERVICE') private readonly proxy: ClientProxy) {
+    constructor(@Inject('FIRST_TEAM') private readonly proxy: ClientProxy) {
         super(proxy as unknown as IEventPublisher);
     }
 

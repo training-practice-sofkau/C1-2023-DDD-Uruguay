@@ -1,7 +1,7 @@
 import { IUseCase, ValueObjectErrorHandler, ValueObjectException } from 'src/libs';
 import { AgeValueObject, CountryValueObject, FullNameValueObject, IAddedTrainerResponse, IAddTrainerCommand, ITrainerDomainEntity, ITrainingDomainService, SpecialtyValueObject, TrainerDomainEntity } from '../../../domain';
 import { TrainingAggregate } from '../../../domain/aggregates/training.aggregate';
-import { AddedTrainingFieldEventPublisher } from '../../../domain/events/publishers/training';
+import { AddedTrainerEventPublisher, AddedTrainingFieldEventPublisher } from '../../../domain/events/publishers/training';
 
 export class AddTrainerUseCases<
     Command extends IAddTrainerCommand,
@@ -14,10 +14,10 @@ implements IUseCase<Command, Response>
 
     constructor(
         private readonly trainingService: ITrainingDomainService,
-        private readonly addedTrainingFieldEventPublisher: AddedTrainingFieldEventPublisher,
+        private readonly addedTrainerEventPublisher: AddedTrainerEventPublisher,
     ) {
         super();
-        this.trainingAggregate = new TrainingAggregate({trainingService, addedTrainingFieldEventPublisher})
+        this.trainingAggregate = new TrainingAggregate({trainingService, addedTrainerEventPublisher})
     }
 
     async execute(command?: Command): Promise<Response> {

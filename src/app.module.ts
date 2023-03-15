@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { PostgreSQLModule } from './subdomains/first-team-structure/contexts/first-team/infrastructure/persistence/databases/postgres/postgresql.module';
-import { KafkaModule } from './kafka/kafka.module';
+import { PersistenceModule } from './subdomains/first-team-structure/contexts/first-team/infrastructure/persistence/persistence.module';
+import { FirstTeamModule } from './subdomains/first-team-structure/contexts/first-team/infrastructure/first-team.module';
 
 @Module({
   imports: [
@@ -12,8 +13,7 @@ import { KafkaModule } from './kafka/kafka.module';
       // envFilePath: '../environments/.env.dev',
 
     }),
-    PostgreSQLModule,
-    KafkaModule,],
+    FirstTeamModule,],
   controllers: [],
   providers: [],
 })
