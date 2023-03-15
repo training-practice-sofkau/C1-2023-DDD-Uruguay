@@ -183,7 +183,7 @@ export class SaleAgregate
   }
 
   async AddSeller(sellerID: SellerDomain): Promise<SellerDomain> {
-    if (this.billservice && this.AddedSellerEventPublisher) {
+    if (this.saleservice && this.AddedSellerEventPublisher) {
       const result = await this.saleservice.AddSeller(sellerID);
       this.AddedSellerEventPublisher.response = result;
       this.AddedSellerEventPublisher.publish();

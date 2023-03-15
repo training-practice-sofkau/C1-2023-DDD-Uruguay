@@ -47,8 +47,8 @@ export class UpdatePhoneClientCaseUse<
         command: Command
     ): IClientEntity {
 
-        const  Phone = new PhoneValue(command.Phone)
-        const ClientID = new IdclientValue(command.ClientID)
+        const  Phone = new PhoneValue(command.Phone).value
+        const ClientID = new IdclientValue(command.ClientID).value
 
         return {
            Phone,
@@ -92,8 +92,8 @@ export class UpdatePhoneClientCaseUse<
         } = valueObject
 
         return new ClientDomainBase({          
-            Phone: Phone,
-          ClientID: ClientID
+            Phone: Phone.valueOf(),
+          ClientID: ClientID.valueOf()
         })
 
     }

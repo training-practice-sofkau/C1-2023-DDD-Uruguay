@@ -8,11 +8,15 @@ import { MangaStoreModule } from './subdomains/Store/contexts/Customer-Service/i
     MangaStoreModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: join(process.cwd(), 'environments', `.env.${process.env.SCOPE?.trimEnd()}`)
+      envFilePath: join(
+        process.cwd(),
+        'environments',
+        `.env.${process.env.SCOPE?.trimEnd()}`,
+      ),
       // envFilePath: '../environments/.env.dev' |,
     }),
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}

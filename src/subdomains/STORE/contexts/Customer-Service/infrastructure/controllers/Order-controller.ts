@@ -1,7 +1,28 @@
-import { Controller } from "@nestjs/common";
+import { Controller, Post, Body } from '@nestjs/common';
+import { RegisterOrderCaseUse} from '../../application';
+import {
+  IOrderAddEventPublisher,
+} from '../messaging/publisher/order';
+import {  OrderService } from '../persitence';
+import { IRegisterOrderCommand } from '../utils/commands/order/Iregister-order-comand';
 
-@Controller ('order')
+@Controller('order')
+export class OrderController {
+  constructor(
+    private readonly orderService: OrderService,
 
-export class OrderController  {
+    private readonly registerOrderEventPublisher: IOrderAddEventPublisher,
+    
+  ) {}
+
+  @Post('create-order')
+  async orderRegister(@Body() command: IRegisterOrderCommand) {
+    const useCase = new RegisterOrderCaseUse(
+      this.orderService,
+      this.registerOrderEventPublisher,
+    );
+    return await useCase.execute(command);
+  }
+
+  
 }
-

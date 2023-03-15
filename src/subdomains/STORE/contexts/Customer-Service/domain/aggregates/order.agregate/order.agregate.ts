@@ -197,6 +197,7 @@ Publisher events go in this place
    */
   async AddClient(data: ClientDomainBase): Promise<ClientDomainBase> {
     if (this.orderService && this.AddCustomerEventPublisher) {
+
       const result = await this.orderService.AddClient(data);
 
       this.AddCustomerEventPublisher.response = result;
@@ -296,10 +297,12 @@ Publisher events go in this place
    * @param {UpdateNameClient} idclient - UpdateNameClient
    * @returns The result of the update of the client name
    */
-  async UpdateClientName(
-    idclient: ClientDomainBase,
-  ): Promise<ClientDomainBase> {
-    if (this.orderService && this.NameModifiedEventPublisher) {
+  async UpdateClientName(    idclient: ClientDomainBase,  ): Promise<ClientDomainBase> {
+    if(this.NameModifiedEventPublisher) 
+    throw new AggregateRootException(
+      'aca esta tu error',
+    );
+    if (this.ClientService && this.NameModifiedEventPublisher) {
       const result = await this.ClientService.UpdateClientName(idclient);
 
       this.NameModifiedEventPublisher.response = result;
@@ -317,7 +320,7 @@ Publisher events go in this place
   async UpdateClientPhone(
     idclient: ClientDomainBase,
   ): Promise<ClientDomainBase> {
-    if (this.orderService && this.PhoneModifiedEventPublisher) {
+    if (this.ClientService && this.PhoneModifiedEventPublisher) {
       const result = await this.ClientService.UpdateClientPhone(idclient);
 
       this.PhoneModifiedEventPublisher.response = result;
@@ -327,7 +330,7 @@ Publisher events go in this place
       return this.PhoneModifiedEventPublisher.response;
     }
     throw new AggregateRootException(
-      'OrderAgregate "ClientService" y/o "NameModifiedEventPublisher" no estan definidos',
+      'ClientService "ClientService" y/o "PhoneModifiedEventPublisher" no estan definidos',
     );
   }
 }

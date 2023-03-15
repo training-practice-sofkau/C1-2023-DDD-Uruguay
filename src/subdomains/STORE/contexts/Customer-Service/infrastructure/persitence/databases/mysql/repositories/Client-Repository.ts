@@ -9,8 +9,7 @@ export class ClientRepository
     implements IRepositoriBase<ClientEntityDB> {
 
 
-    constructor(@InjectRepository(ClientEntityDB)
-    private readonly repository: Repository<ClientEntityDB>) { }
+    constructor(@InjectRepository(ClientEntityDB) private readonly repository: Repository<ClientEntityDB>) { }
 
 
   
@@ -21,7 +20,11 @@ export class ClientRepository
     }
 
      async   create(entity: ClientEntityDB): Promise<ClientEntityDB> {
-     return this.repository.create(entity)    }
+
+      return this.repository.save(entity)  
+      
+        }
+
 
    async  update(ClientID: string, newClient: ClientEntityDB): Promise<ClientEntityDB> {
         const client = await this.repository.findOneBy({ ClientID });

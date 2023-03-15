@@ -17,7 +17,7 @@ export class ClientNameValue extends ValueObjectBase<string>{
  */
 
   validateData(): void {
-  this.validateStructure()
+  // this.validateStructure()
   }
 
 /* Validating the structure of the data. */

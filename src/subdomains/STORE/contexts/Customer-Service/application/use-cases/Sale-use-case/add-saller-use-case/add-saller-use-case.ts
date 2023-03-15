@@ -41,7 +41,6 @@ export class AddSallerUseCase<
         command: Command
     ): Promise<SellerDomain | null> {
         const ValueObject = this.createValueObject(command);
-        this.validateValueObject(ValueObject);
         const entity = this.createEntityAddSeller(ValueObject);
         return this.exectueSaleAggregateRoot(entity)
     }
@@ -61,28 +60,7 @@ export class AddSallerUseCase<
         }
     }
 
-    private validateValueObject(
-        valueObject: SellerDomain
-    ): void {
-        const {
-            Name,
-            IdSeller
-        } = valueObject
-      
-
-        if ( IdSeller instanceof IdsellerValue &&  IdSeller.hasErrors())
-            this.setErrors(IdSeller.getErrors());    
-
-        if ( Name instanceof NameSellerValue && Name.hasErrors())
-            this.setErrors(Name.getErrors());
-
-        if (this.hasErrors() === true)
-            throw new ValueObjectException(
-                'Hay algunos errores en el comando ejecutado para crear cliente',
-                this.getErrors(),
-            );
-
-    }
+ 
 
     private createEntityAddSeller(
         valueObject: SellerDomain

@@ -18,7 +18,7 @@ export class PhoneValue extends ValueObjectBase<number>{
  */
 
   validateData(): void {
-  this.validateStructure()
+  // this.validateStructure()
   }
 
 /* Validating the structure of the data. */

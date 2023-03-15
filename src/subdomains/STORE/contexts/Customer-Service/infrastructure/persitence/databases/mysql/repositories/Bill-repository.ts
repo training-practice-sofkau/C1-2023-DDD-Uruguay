@@ -17,7 +17,7 @@ export class BillRepository
         if (!bill) throw new BadRequestException(`Factura con id ${IDBill} no encontrado`)
         return bill    }
     async create(entity: BillEntityDB): Promise<BillEntityDB> {
-        return this.repository.create(entity)    }
+        return this.repository.save(entity)    }
     async update(IDBill: string, newBill: BillEntityDB): Promise<BillEntityDB> {
         const bill = await this.repository.findOneBy({ IDBill });
         if (bill) {

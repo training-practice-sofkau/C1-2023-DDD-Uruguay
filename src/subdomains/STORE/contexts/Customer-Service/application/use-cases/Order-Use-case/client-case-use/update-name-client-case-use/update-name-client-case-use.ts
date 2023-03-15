@@ -21,7 +21,6 @@ export class UpdateNameClientCaseUse<
     constructor(
         private readonly ClientService: ClientDomainService,
         private readonly ModifiedClientEventPublisher: NameModifiedEventPublisher,
-        private readonly GetClientEventPublisher: ClientObtainedEventPublisher,
     ) {
         super();
         this.OrderAgregate = new OrderAgregate({
@@ -49,10 +48,11 @@ export class UpdateNameClientCaseUse<
         command: Command
     ): IClientEntity {
 
-        const  Name = new ClientNameValue(command.newName)
-        const ClientID = new IdclientValue(command.clientId)
+        const  Name = new ClientNameValue(command.newName).value
+        const ClientID = new IdclientValue(command.ClientID).value
 
         return {
+        
           Name,
           ClientID
         }

@@ -1,11 +1,12 @@
 import { IUseCase, ValueObjectErrorHandler, ValueObjectException } from "src/libs";
 import { OrderAgregate } from "../../../../domain/aggregates/order.agregate";
 import { ClientObtainedResponse } from '../../../../domain/interfaces/responses/Order-Response/client-obtained-response';
-import { ClientDomainService } from "../../../../domain/services";
-import { ClientObtainedEventPublisher } from '../../../../domain/events/publishers/Sale/Client-obtained-event-publisher';
+import { ClientDomainService, IorderDomainService } from "../../../../domain/services";
+import { ClientObtainedEventPublisher } from '../../../../domain/events/publishers/order/';
 import { ClientDomainBase } from '../../../../domain/entities/Order-domain/client-domain-entity';
 import { ClientNameValue,  PhoneValue } from "../../../../domain/value-objects";
 import { IGetClient } from "../../../../domain/interfaces/commands";
+import { OrderService } from '../../../../infrastructure/persitence/services/OrderServices/OrderService';
 
 export class GetClientCaseUse<
     Command extends IGetClient = IGetClient,
@@ -18,13 +19,14 @@ export class GetClientCaseUse<
 
     private readonly OrderAgregate: OrderAgregate;
 
-    constructor(
-        private readonly ClientService: ClientDomainService,
-        private readonly GetClientEventPublisher: ClientObtainedEventPublisher,
+    constructor(   
+
+        private readonly orderService?: IorderDomainService,
+        private readonly GetClientEventPublisher?: ClientObtainedEventPublisher,
     ) {
         super();
         this.OrderAgregate = new OrderAgregate({
-            ClientService,
+            orderService,
             GetClientEventPublisher,
         })
     }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne, Index } from 'typeorm';
 import { MangaDomainBase } from '../../../../../domain/entities/Order-domain/manga-domain-entity';
 import { OrderEntityDb } from "./Order-entity-db";
 
@@ -6,6 +6,7 @@ import { OrderEntityDb } from "./Order-entity-db";
 export class MangaEntityDb extends MangaDomainBase{
   @PrimaryGeneratedColumn('uuid') 
    Mangaid: string;
+   @Index()
 
   @Column()
   Name: string;

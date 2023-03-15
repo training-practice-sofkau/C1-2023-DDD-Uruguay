@@ -13,8 +13,7 @@ export class TypeOrmMysqlConfigService implements TypeOrmOptionsFactory {
     createTypeOrmOptions(connectionName?: string): TypeOrmModuleOptions{
 
 
-        return {
-            
+        return {            
             type: 'mysql',
             host: "localhost",
             port: 3306,
@@ -24,7 +23,7 @@ export class TypeOrmMysqlConfigService implements TypeOrmOptionsFactory {
             entities: [
                 BillEntityDB,ClientEntityDB,saleEntityBd,OrderEntityDb,SellerEntityDB,MangaEntityDb
             ],
-            synchronize: true,
+            synchronize: false,
         }
     }
 

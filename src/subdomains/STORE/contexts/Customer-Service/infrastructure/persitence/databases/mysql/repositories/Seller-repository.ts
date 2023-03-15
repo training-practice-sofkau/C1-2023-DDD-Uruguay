@@ -18,7 +18,7 @@ export class SellerRepository
     }
 
     async create(entity: SellerEntityDB): Promise<SellerEntityDB> {
-        return this.repository.create(entity)
+        return this.repository.save(entity)
     }
 
     async update(IdSeller: string, sellerEntity: SellerEntityDB): Promise<SellerEntityDB> {

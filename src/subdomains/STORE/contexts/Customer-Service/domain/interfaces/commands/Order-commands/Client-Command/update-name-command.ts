@@ -1,4 +1,4 @@
 export interface UpdateNameClient {
-    clientId: string;
+    ClientID: string;
     newName: string;    
 }

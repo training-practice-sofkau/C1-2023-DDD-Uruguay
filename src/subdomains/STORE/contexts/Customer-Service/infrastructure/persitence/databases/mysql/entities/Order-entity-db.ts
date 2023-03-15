@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, Index, OneToMany } from 'typeorm';
 import { ClientEntityDB } from './Client-entity-db';
 import { MangaEntityDb } from './Manga-entity-db';
 import { OrderDomainEntityBase } from '../../../../../domain/entities/Order-domain/Order-domain-entity';
@@ -9,11 +9,11 @@ export class OrderEntityDb extends OrderDomainEntityBase {
   @PrimaryGeneratedColumn('uuid')
   orderId: string;
 
- 
-  @OneToOne(() => ClientEntityDB, (client) => client.order, {
+
+  @OneToMany(() => ClientEntityDB, (client) => client.ClientID, {
     cascade: ['insert', 'update']
   })
-  @JoinColumn()
+  
   client: ClientEntityDB;
   
 

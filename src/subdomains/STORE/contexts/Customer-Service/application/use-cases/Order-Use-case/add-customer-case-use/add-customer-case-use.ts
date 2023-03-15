@@ -1,6 +1,6 @@
 import { ValueObjectErrorHandler, IUseCase, ValueObjectException } from "src/libs";
 import { OrderAgregate } from "../../../../domain/aggregates/order.agregate";
-import { ClientDomainService } from "../../../../domain/services";
+import { ClientDomainService, IorderDomainService } from "../../../../domain/services";
 import { ClientAddEventPublisher } from '../../../../domain/events/publishers/order/added-customer-event-Publisher';
 import { ClientDomainBase, IClientEntity } from "../../../../domain/entities";
 import { IdclientValue } from '../../../../domain/value-objects/Sale/Bill/idclient-value/idclient-value';
@@ -20,19 +20,18 @@ export class AddCustomerCaseUse<
     private readonly OrderAgregate: OrderAgregate;
 
     constructor(
-        private readonly ClientService: ClientDomainService,
+        private readonly orderService: IorderDomainService,
         private readonly AddCustomerEventPublisher: ClientAddEventPublisher,
     ) {
         super();
         this.OrderAgregate = new OrderAgregate({
-            ClientService,
+            orderService,
             AddCustomerEventPublisher
         })
     }
 
     async execute(command?: Command): Promise<Response> {
         const data = await this.executeCommand(command);
-
         return { success: data ? true : false, data } as unknown as Response
     }
 
@@ -40,8 +39,9 @@ export class AddCustomerCaseUse<
         command: Command
     ): Promise<ClientDomainBase | null> {
         const ValueObject = this.createValueObject(command);
-        this.validateValueObject(ValueObject);
+        this.validateValueObject(ValueObject);        
         const entity = this.createEntityClientDomain(ValueObject);
+        console.log(entity)
         return this.exectueOrderAggregateRoot(entity)
     }
 
@@ -90,14 +90,15 @@ export class AddCustomerCaseUse<
     ): ClientDomainBase {
 
         const {
+            ClientID,
             Name,
             Phone
         } = valueObject
 
         return new ClientDomainBase({
-          
-          Name: Name,
-          Phone: Phone,
+            ClientID: ClientID.valueOf(),
+          Name: Name.valueOf(),
+          Phone: Phone.valueOf(),
         })
 
     }
@@ -105,6 +106,7 @@ export class AddCustomerCaseUse<
     private exectueOrderAggregateRoot(
         entity: ClientDomainBase,
     ): Promise<ClientDomainBase | null> {
+
         return this.OrderAgregate.AddClient(entity)
     }
 }
